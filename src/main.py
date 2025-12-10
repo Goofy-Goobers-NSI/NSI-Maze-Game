@@ -1,8 +1,10 @@
 import pygame
+from maze import Maze
 
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
+
 clock = pygame.time.Clock()
 running = True
 screen.fill("black")
@@ -13,13 +15,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            
     
-    for i in range(15):
-        for j in range(15):
-            pygame.draw.rect(screen,"red",[40*i+345,40*j+65,40,40],3)
-            
-    
+    maze = Maze(15, 15)
+    maze.draw_maze(screen)
+
 
     # flip() the display to put your work on screen
     pygame.display.flip()
