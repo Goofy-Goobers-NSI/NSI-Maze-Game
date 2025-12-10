@@ -32,10 +32,7 @@ def choose_end(start_cell):
                 return cellule
 
 cellule_depart = choose_start()
-print(cellule_depart)
 cellule_fin = choose_end(cellule_depart)
-print(cellule_fin)
-
 
 while running:
     # pygame.QUIT event means the user clicked X to close your window
