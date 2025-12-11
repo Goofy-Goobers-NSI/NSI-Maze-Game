@@ -1,24 +1,13 @@
-# Virtual environments
 .venv/
 venv/
 env/
-
-# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
-
-# VSCode
 .vscode/
-
-# Build / distribution files
 build/
 dist/
 *.egg-info/
-
-# OS-specific junk
 .DS_Store
 Thumbs.db
-
-# Pygame cache or logs
 *.log
