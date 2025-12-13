@@ -1,5 +1,3 @@
-# Maze
-
 import pygame
 from cell import Cellule
 from random import randint
@@ -66,3 +64,6 @@ class Maze:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
 
         # Later: draw lines only where walls = True
+    
+    def random_walk(self):
+        while True: 
