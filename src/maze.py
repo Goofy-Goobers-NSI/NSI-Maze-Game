@@ -65,5 +65,42 @@ class Maze:
 
         # Later: draw lines only where walls = True
     
-    def random_walk(self):
-        while True: 
+    def random_walk(self, start_cell):
+        '''
+        Creates a path that starts from a cell not in the maze
+        to a cell in the maze, while removing any loops, this where the term
+        "loop erased walk" comes from.
+        '''
+
+        path = [start_cell]
+        current = start_cell
+
+        while True:
+            direction = randint(0, 3)
+            nx = current.x + DX[direction]  # next x
+            ny = current.y + DY[direction]  # next y
+
+            if nx < 0 or nx >= self.largeur or ny < 0 or ny >= self.hauteur:
+                # skips if the next cell would be outside of the grid
+                continue
+
+            next_cell = self.grille[ny][nx]
+
+            if (nx, ny) in self.in_maze:  # if cell in maze => exit
+                path.append(next_cell)
+                break
+
+            if next_cell in path:
+                first_occ = path.index(next_cell)
+                new_path = []
+                for i in range(first_occ + 1):
+                    new_path.append(path[i])
+
+                path = new_path
+            else:
+                path.append(next_cell)
+            
+            current = next_cell
+
+        return path
+    
