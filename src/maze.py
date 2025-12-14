@@ -49,9 +49,9 @@ class Maze:
         for y in range(self.hauteur):
             for x in range(self.largeur):
                 cell = self.grille[y][x]
-                self.draw_cell(screen, cell)
+                self.draw_start_end_cell(screen, cell)
 
-    def draw_cell(self, screen, cell):
+    def draw_start_end_cell(self, screen, cell):
         """Draw one cell and its walls"""
         x = self.offset_x + cell.x * self.cell_size
         y = self.offset_y + cell.y * self.cell_size
@@ -80,7 +80,7 @@ class Maze:
             nx = current.x + DX[direction]  # next x
             ny = current.y + DY[direction]  # next y
 
-            if nx < 0 or nx >= self.largeur or ny < 0 or ny >= self.hauteur:
+            if nx < 0 or nx >= self.largeur or ny < 0 or ny >= self.hauteur-1:
                 # skips if the next cell would be outside of the grid
                 continue
 
@@ -93,9 +93,7 @@ class Maze:
             if next_cell in path:
                 first_occ = path.index(next_cell)
                 new_path = []
-                for i in range(first_occ + 1):
-                    new_path.append(path[i])
-
+                path = path[:first_occ + 1]
                 path = new_path
             else:
                 path.append(next_cell)
@@ -103,4 +101,5 @@ class Maze:
             current = next_cell
 
         return path
+    
     
