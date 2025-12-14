@@ -80,7 +80,7 @@ class Maze:
             nx = current.x + DX[direction]  # next x
             ny = current.y + DY[direction]  # next y
 
-            if nx < 0 or nx >= self.largeur or ny < 0 or ny >= self.hauteur-1:
+            if nx < 0 or nx >= self.largeur or ny < 0 or ny >= self.hauteur:
                 # skips if the next cell would be outside of the grid
                 continue
 
@@ -92,9 +92,7 @@ class Maze:
 
             if next_cell in path:
                 first_occ = path.index(next_cell)
-                new_path = []
                 path = path[:first_occ + 1]
-                path = new_path
             else:
                 path.append(next_cell)
             
