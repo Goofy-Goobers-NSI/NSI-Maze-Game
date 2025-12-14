@@ -18,11 +18,15 @@ class Maze:
 
         # Create grid of cell objects
         self.grille = [[Cellule(x, y) for y in range(largeur)] for x in range(hauteur)]
-        self.in_maze = {tuple(self.grille[randint(0, self.largeur - 1 )][randint(0, self.hauteur - 1 )])}  # for Wilson's algorithm 
+        self.in_maze = {self.choose_random_cell()}
 
-        # start and end placeholders
+        # placeholders
         self.start = None
         self.end = None
+
+    # Super goated helper method :)
+    def choose_random_cell(self):
+        return self.grille[randint(0, self.largeur - 1)][randint(0, self.hauteur - 1)] 
 
     def choose_start(self):
         # Pick a random border cell as starting point
@@ -62,8 +66,6 @@ class Maze:
             pygame.draw.rect(screen, "red", [x, y, s, s], 4)
         else:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
-
-        # Later: draw lines only where walls = True
     
     def random_walk(self, start_cell):
         '''
@@ -87,7 +89,7 @@ class Maze:
             
             next_cell = self.grille[nx][ny]
             
-            if (nx, ny) in self.in_maze:  # if cell in maze => exit
+            if next_cell in self.in_maze:  # if cell in maze => exit
                 path.append(next_cell)
                 break
             
@@ -99,9 +101,17 @@ class Maze:
             
             current = next_cell
 
+        self.in_maze.update(path) # merges the path into the maze, .update() is ∪ for sets (les ensembles)
         return path
+
+    def carve_path(self, path):
+        '''
+        Removes walls between cells (set walls to False) in the path,
+        The path is a list of Cellule objects from the random_walk() method
+        '''
     
-    #def choose_random_cell(self):
-        #random_cell = 
-    
-    
+    def generate_maze(self):
+        """
+        Generates the maze with Wilson's Algorithm,
+        keeps looping until every cell is in the maze, if 
+        """

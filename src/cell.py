@@ -15,3 +15,6 @@ class Cellule:
     
     def __eq__(self,cell):
         return self.x == cell.x and self.y == cell.y
+    
+    def __hash__(self):
+        return hash((self.x, self.y))
