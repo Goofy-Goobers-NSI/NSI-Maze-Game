@@ -64,9 +64,11 @@ class Maze:
         # If start or end, color red
         if cell == self.start or cell == self.end:
             pygame.draw.rect(screen, "red", [x, y, s, s], 4)
+        elif cell in self.in_maze:
+            pygame.draw.rect(screen, "green", [x, y, s, s], 2)
         else:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
-    
+
     def random_walk(self, start_cell):
         '''
         Creates a path that starts from a cell not in the maze
@@ -76,7 +78,7 @@ class Maze:
 
         path = [start_cell]
         current = start_cell
-        
+
 
         while True:
             direction = randint(0, 3)
@@ -86,13 +88,13 @@ class Maze:
             if nx < 0 or nx >= self.largeur or ny < 0 or ny >= self.hauteur:
                 # skips if the next cell would be outside of the grid
                 continue
-            
+
             next_cell = self.grille[nx][ny]
-            
+
             if next_cell in self.in_maze:  # if cell in maze => exit
                 path.append(next_cell)
                 break
-            
+
             if next_cell in path:
                 first_occ = path.index(next_cell)
                 path = path[:first_occ + 1]
