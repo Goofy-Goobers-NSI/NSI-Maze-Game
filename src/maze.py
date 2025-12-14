@@ -17,8 +17,8 @@ class Maze:
         self.offset_y = offset_y
 
         # Create grid of cell objects
-        self.grille = [[Cellule(x, y) for x in range(largeur)] for y in range(hauteur)]
-        self.in_maze = set()  # for Wilson's algorithm
+        self.grille = [[Cellule(x, y) for y in range(largeur)] for x in range(hauteur)]
+        self.in_maze = {tuple(self.grille[randint(0, self.largeur - 1 )][randint(0, self.hauteur - 1 )])}  # for Wilson's algorithm 
 
         # start and end placeholders
         self.start = None
@@ -30,7 +30,7 @@ class Maze:
             x = randint(0, self.largeur - 1)
             y = randint(0, self.hauteur - 1)
             if x in (0, self.largeur - 1) or y in (0, self.hauteur - 1):
-                self.start = self.grille[y][x]
+                self.start = self.grille[x][y]
                 return self.start
 
     def choose_end(self):
@@ -41,14 +41,14 @@ class Maze:
         x, y = self.start.x, self.start.y
         end_x = (self.largeur - 1) - x
         end_y = (self.hauteur - 1) - y
-        self.end = self.grille[end_y][end_x]
+        self.end = self.grille[end_x][end_y]
         return self.end
 
     def draw_maze(self, screen):
         # Draw the maze grid and highlight start/end
         for y in range(self.hauteur):
             for x in range(self.largeur):
-                cell = self.grille[y][x]
+                cell = self.grille[x][y]
                 self.draw_start_end_cell(screen, cell)
 
     def draw_start_end_cell(self, screen, cell):
@@ -74,6 +74,7 @@ class Maze:
 
         path = [start_cell]
         current = start_cell
+        
 
         while True:
             direction = randint(0, 3)
@@ -83,13 +84,13 @@ class Maze:
             if nx < 0 or nx >= self.largeur or ny < 0 or ny >= self.hauteur:
                 # skips if the next cell would be outside of the grid
                 continue
-
-            next_cell = self.grille[ny][nx]
-
+            
+            next_cell = self.grille[nx][ny]
+            
             if (nx, ny) in self.in_maze:  # if cell in maze => exit
                 path.append(next_cell)
                 break
-
+            
             if next_cell in path:
                 first_occ = path.index(next_cell)
                 path = path[:first_occ + 1]
@@ -99,5 +100,8 @@ class Maze:
             current = next_cell
 
         return path
+    
+    #def choose_random_cell(self):
+        #random_cell = 
     
     

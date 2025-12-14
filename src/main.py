@@ -11,6 +11,7 @@ running = True
 maze = Maze(15, 15)
 maze.choose_start()
 maze.choose_end()
+maze.random_walk(maze.grille[randint(0, maze.largeur - 1 )][randint(0, maze.hauteur - 1 )])
 
 while running:
     for event in pygame.event.get():
