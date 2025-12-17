@@ -11,8 +11,7 @@ running = True
 maze = Maze(15, 15)
 maze.choose_start()
 maze.choose_end()
-print(maze.in_maze)
-print(maze.random_walk(maze.choose_random_cell()))
+maze.random_walk(maze.choose_random_cell())
 
 while running:
     for event in pygame.event.get():
