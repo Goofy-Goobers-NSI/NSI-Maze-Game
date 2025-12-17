@@ -76,7 +76,7 @@ class Maze:
         "loop erased walk" comes from.
         '''
 
-        path = [start_cell]
+        path = [(start_cell, None)]
         current = start_cell
 
 
@@ -92,18 +92,30 @@ class Maze:
             next_cell = self.grille[nx][ny]
 
             if next_cell in self.in_maze:  # if cell in maze => exit
-                path.append(next_cell)
+                path.append((next_cell, direction))
                 break
 
-            if next_cell in path:
-                first_occ = path.index(next_cell)
-                path = path[:first_occ + 1]
+
+            ifound = None  # stores the index of the next_cell in path
+
+            for i in range(len(path)):
+                cell, dir_used = path[i]
+                if cell == next_cell:
+                    ifound = i
+                    break
+
+            if ifound is not None:
+                path = path[:ifound + 1]
             else:
-                path.append(next_cell)
+                path.append((next_cell, direction))
             
             current = next_cell
 
-        self.in_maze.update(path) # merges the path into the maze, .update() is ∪ for sets (les ensembles)
+        for cell, dir_used in path:
+            self.in_maze.add(cell)
+
+        self.carve_path(path)
+
         return path
 
     def carve_path(self, path):
@@ -111,6 +123,7 @@ class Maze:
         Removes walls between cells (set walls to False) in the path,
         The path is a list of Cellule objects from the random_walk() method
         '''
+        
     
     def generate_maze(self):
         """
