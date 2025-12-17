@@ -7,6 +7,7 @@ N, E, S, W = 0, 1, 2, 3
 DX = {E: 1, W: -1, N: 0, S: 0}
 DY = {E: 0, W: 0, N: -1, S: 1}
 OPPOSITE = {E: W, W: E, N: S, S: N}
+COORD_LIGNE_MURS = {0 : [(0, 0), (40, 0)], 1 : [(40, 0), (40, 40)], 2 : [(40, 40), (0, 40)], 3 : [(0, 40), (0, 0)]}
 
 class Maze:
     def __init__(self, largeur=15, hauteur=15, cell_size=40, offset_x=340, offset_y=60):
@@ -17,15 +18,15 @@ class Maze:
         self.offset_y = offset_y
 
         # Create grid of cell objects
-        self.grille = [[Cellule(x, y) for y in range(largeur)] for x in range(hauteur)]
+        self.grille = [[Cellule(x, y) for y in range(hauteur)] for x in range(largeur)]
         self.in_maze = {self.choose_random_cell()}
 
         # placeholders
         self.start = None
         self.end = None
 
-    # Super goated helper method :)
-    def choose_random_cell(self):
+    # Super goated helper method :) 
+    def choose_random_cell(self): 
         return self.grille[randint(0, self.largeur - 1)][randint(0, self.hauteur - 1)] 
 
     def choose_start(self):
@@ -64,10 +65,18 @@ class Maze:
         # If start or end, color red
         if cell == self.start or cell == self.end:
             pygame.draw.rect(screen, "red", [x, y, s, s], 4)
-        elif cell in self.in_maze:
-            pygame.draw.rect(screen, "green", [x, y, s, s], 2)
+        #elif cell in self.in_maze:
+         #   pygame.draw.rect(screen, "green", [x, y, s, s], 2)
         else:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
+    
+    def draw_walls(self,screen):
+        for cell in self.in_maze:
+            for wall in cell.walls:
+                if not(wall):
+                    start_pos =  (self.offset_x + cell.x * self.cell_size + COORD_LIGNE_MURS[cell.walls.index(wall)][0][0]-1,self.offset_y + cell.y * self.cell_size + COORD_LIGNE_MURS[cell.walls.index(wall)][0][1]-1)
+                    end_pos = (self.offset_x + cell.x * self.cell_size + COORD_LIGNE_MURS[cell.walls.index(wall)][1][0]-1,self.offset_y + cell.y * self.cell_size + COORD_LIGNE_MURS[cell.walls.index(wall)][1][1]-1)
+                    pygame.draw.line(screen,"white",start_pos,end_pos,2)
 
     def random_walk(self, start_cell):
         '''
@@ -104,6 +113,7 @@ class Maze:
             current = next_cell
 
         self.in_maze.update(path) # merges the path into the maze, .update() is ∪ for sets (les ensembles)
+        print(self.in_maze)
         return path
 
     def carve_path(self, path):
@@ -111,9 +121,20 @@ class Maze:
         Removes walls between cells (set walls to False) in the path,
         The path is a list of Cellule objects from the random_walk() method
         '''
+        for i in range(len(path)-1):
+            direction  = [path [i+1].x - path[i].x, path [i+1].y - path[i].y]
+            for j in range(2):
+                direction[j] *= -1
+            path[i+1].add_walls(direction)
     
     def generate_maze(self):
         """
         Generates the maze with Wilson's Algorithm,
         keeps looping until every cell is in the maze, if 
         """
+        #while len(self.in_maze) < len(self.grille)**2:
+        random_cell = Maze.choose_random_cell(self)
+        while random_cell in self.in_maze:
+            random_cell = Maze.choose_random_cell(self)
+        path = Maze.random_walk(self,random_cell)
+        Maze.carve_path(self,path)
