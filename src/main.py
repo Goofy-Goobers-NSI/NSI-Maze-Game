@@ -11,16 +11,18 @@ running = True
 maze = Maze(15, 15)
 maze.choose_start()
 maze.choose_end()
-print(maze.in_maze)
-print(maze.random_walk(maze.choose_random_cell()))
+maze.generate_maze()
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        
 
     screen.fill("white")
     maze.draw_maze(screen)
+    maze.draw_walls(screen)
+    
 
     pygame.display.flip()
     clock.tick(60)
