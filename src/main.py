@@ -11,14 +11,13 @@ running = True
 maze = Maze(15, 15)
 maze.choose_start()
 maze.choose_end()
-#maze.generate_maze()
+maze.generate_maze()
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            maze.generate_maze()
+        
 
     screen.fill("white")
     maze.draw_maze(screen)
