@@ -5,7 +5,7 @@ class Cellule:
         self.walls = [True] * 4 
         self.direction = None
         
-    def add_walls(self,list_walls): # wall_direction will take the form of a list : [1,0,1,0] will be one wall on top and one on bottom.
+    def remove_walls(self,list_walls): # wall_direction will take the form of a list : [1,0,1,0] will be one wall on top and one on bottom.
         if list_walls[0] == 0: # If direction is North or South
             if list_walls[1] > 0: # Direction = South
                 self.walls[2] = False
