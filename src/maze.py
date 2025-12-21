@@ -137,7 +137,6 @@ class Maze:
         The path is a list of Cellule objects from the random_walk() method
         '''
         for i in range(len(path)-1):
-            print(path)
             direction  = [path [i+1].x - path[i].x, path [i+1].y - path[i].y]
             path[i].remove_walls(direction)
             for j in range(2):
