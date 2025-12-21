@@ -46,9 +46,9 @@ while running:
         
 
     screen.fill("white")
-    player.draw_player(screen,maze)
     maze.draw_maze(screen)
     maze.draw_walls(screen)
+    player.draw_player(screen,maze)
 
     pygame.display.flip()
     clock.tick(60)

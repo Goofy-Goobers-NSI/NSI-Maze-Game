@@ -64,17 +64,21 @@ class Maze:
         for y in range(self.hauteur):
             for x in range(self.largeur):
                 cell = self.grille[x][y]
-                self.draw_start_end_cell(screen, cell)
+                self.draw_cells(screen, cell)
 
-    def draw_start_end_cell(self, screen, cell):
+    def draw_cells(self, screen, cell):
         """Draw one cell and its walls"""
         x = self.offset_x + cell.x * self.cell_size
         y = self.offset_y + cell.y * self.cell_size
         s = self.cell_size
 
-        # If start or end, color red and remove outside corresponding wall
+        # If start or end, color green or red and remove outside corresponding wall
         if cell == self.start or cell == self.end:
             Maze.remove_outer_walls(self,cell,screen)
+            if cell == self.start:
+                pygame.draw.rect(screen, "green", [x, y, s, s])
+            elif cell == self.end:
+                pygame.draw.rect(screen, "red", [x, y, s, s])
         else:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
     
