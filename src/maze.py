@@ -1,4 +1,4 @@
-mport pygame
+import pygame
 from cell import Cellule
 from random import randint
 
@@ -94,7 +94,7 @@ class Maze:
         "loop erased walk" comes from.
         '''
 
-        path = [(start_cell, None)]
+        path = [start_cell]
         current = start_cell
 
 
@@ -110,14 +110,14 @@ class Maze:
             next_cell = self.grille[nx][ny]
 
             if next_cell in self.in_maze:  # if cell in maze => exit
-                path.append((next_cell, direction))
+                path.append(next_cell)
                 break
 
 
             ifound = None  # stores the index of the next_cell in path
 
             for i in range(len(path)):
-                cell, dir_used = path[i]
+                cell = path[i]
                 if cell == next_cell:
                     ifound = i
                     break
@@ -125,7 +125,7 @@ class Maze:
             if ifound is not None:
                 path = path[:ifound + 1]
             else:
-                path.append((next_cell, direction))
+                path.append(next_cell)
             
             current = next_cell
         self.in_maze.update(path) # merges the path into the maze, .update() is ∪ for sets (les ensembles)
@@ -137,6 +137,7 @@ class Maze:
         The path is a list of Cellule objects from the random_walk() method
         '''
         for i in range(len(path)-1):
+            print(path)
             direction  = [path [i+1].x - path[i].x, path [i+1].y - path[i].y]
             path[i].remove_walls(direction)
             for j in range(2):
