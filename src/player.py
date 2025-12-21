@@ -11,7 +11,7 @@ class Player:
         pygame.draw.rect(screen,"purple",[x,y,20,20])
         pygame.draw.rect(screen,"black",[x,y,20,20],3)
 
-    def move_player(self,direction): #direction is equal to 1,2,3 or 4 meaning up,right,down,left
+    def move_player(self,direction): # direction is equal to 1,2,3 or 4 meaning up,right,down,left
         if direction == 0:
             self.y -= 1
         elif direction == 1:
