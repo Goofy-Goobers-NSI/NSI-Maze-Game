@@ -16,7 +16,11 @@ class Maze:
         self.cell_size = cell_size
         self.offset_x = offset_x
         self.offset_y = offset_y
-
+        
+        # 80 pixels gap to the right between the two identical mazes
+        self.second_maze_offset_x = offset_x + (largeur * cell_size) + 80 
+        self.second_maze_offset_y = offset_y 
+        
         # Create grid of cell objects
         self.grille = [[Cellule(x, y) for y in range(hauteur)] for x in range(largeur)]
         self.in_maze = {self.choose_random_cell()}
@@ -60,22 +64,29 @@ class Maze:
             cell.remove_walls([0,1])
 
     def draw_maze(self, screen):
-        # Draw the maze grid and highlight start/end
+        # Draw the first maze grid and highlight start/end
         for y in range(self.hauteur):
             for x in range(self.largeur):
                 cell = self.grille[x][y]
-                self.draw_cells(screen, cell)
-        Maze.draw_walls(self,screen)
+                self.draw_cells(screen, cell, self.offset_x, self.offset_y)
+        self.draw_walls(screen, self.offset_x, self.offset_y)
 
-    def draw_cells(self, screen, cell):
-        """Draw one cell and its walls"""
-        x = self.offset_x + cell.x * self.cell_size
-        y = self.offset_y + cell.y * self.cell_size
+    def draw_second_maze(self, screen):
+        """Draw an identical copy of the maze at a different offset for the solver entity"""
+        for y in range(self.hauteur):
+            for x in range(self.largeur):
+                cell = self.grille[x][y]
+                self.draw_cells(screen, cell, self.second_maze_offset_x, self.second_maze_offset_y)
+        self.draw_walls(screen, self.second_maze_offset_x, self.second_maze_offset_y)
+
+    def draw_cells(self, screen, cell, offset_x, offset_y):
+        """Draw one cell and its walls at specified offset"""
+        x = offset_x + cell.x * self.cell_size
+        y = offset_y + cell.y * self.cell_size
         s = self.cell_size
 
         # If start or end, color green or red and remove outside corresponding wall
         if cell == self.start or cell == self.end:
-            Maze.remove_outer_walls(self,cell,screen)
             if cell == self.start:
                 pygame.draw.rect(screen, "green", [x, y, s, s])
             elif cell == self.end:
@@ -83,17 +94,15 @@ class Maze:
         else:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
 
-    def draw_walls(self,screen):
-        # Draw the walls
+    def draw_walls(self, screen, offset_x, offset_y):
+        # Draw the walls at specified offset
         for cell in self.in_maze:
             for i in range(4):
                 if not(cell.walls[i]):
-                    start_pos =  (self.offset_x + cell.x * self.cell_size + COORD_LIGNE_MURS[i][0][0]-1,self.offset_y + cell.y * self.cell_size + COORD_LIGNE_MURS[i][0][1]-1)
-                    end_pos = (self.offset_x + cell.x * self.cell_size + COORD_LIGNE_MURS[i][1][0]-1,self.offset_y + cell.y * self.cell_size + COORD_LIGNE_MURS[i][1][1]-1)
+                    start_pos =  (offset_x + cell.x * self.cell_size + COORD_LIGNE_MURS[i][0][0]-1, offset_y + cell.y * self.cell_size + COORD_LIGNE_MURS[i][0][1]-1)
+                    end_pos = (offset_x + cell.x * self.cell_size + COORD_LIGNE_MURS[i][1][0]-1, offset_y + cell.y * self.cell_size + COORD_LIGNE_MURS[i][1][1]-1)
                     pygame.draw.line(screen,"white",start_pos,end_pos,2)
     
-
-
     def random_walk(self, start_cell):
         '''
         Creates a path that starts from a cell not in the maze

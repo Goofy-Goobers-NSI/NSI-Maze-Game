@@ -43,7 +43,9 @@ while running:
                 wall_hitting_sound.play()
             
     screen.fill("white")
+
     maze.draw_maze(screen)
+    maze.draw_second_maze(screen)
     player.draw_player(screen,maze)
 
     pygame.display.flip()
