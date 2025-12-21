@@ -20,23 +20,23 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-            player.move_player(0)
-            print(player.x,player.y)
+            if player.check_wall_collisions(0,maze):
+                player.move_player(0)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-            player.move_player(1)
-            print(player.x,player.y)
+            if player.check_wall_collisions(1,maze):
+                player.move_player(1)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-            player.move_player(2)
-            print(player.x,player.y)
+            if player.check_wall_collisions(2,maze):
+                player.move_player(2)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
-            player.move_player(3)
-            print(player.x,player.y)
+            if player.check_wall_collisions(3,maze):
+                player.move_player(3)
             
             
         
 
     screen.fill("white")
-    player.draw_player(screen)
+    player.draw_player(screen,maze)
     maze.draw_maze(screen)
     maze.draw_walls(screen)
 
