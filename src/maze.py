@@ -120,19 +120,11 @@ class Maze:
                 path.append(next_cell)
                 break
 
-
-            ifound = None  # stores the index of the next_cell in path
-
             for i in range(len(path)):
-                cell = path[i]
-                if cell == next_cell:
-                    ifound = i
+                if path[i] == next_cell:
+                    path = path[:i]
                     break
-
-            if ifound is not None:
-                path = path[:ifound + 1]
-            else:
-                path.append(next_cell)
+            path.append(next_cell)
             
             current = next_cell
         self.in_maze.update(path) # merges the path into the maze, .update() is ∪ for sets (les ensembles)
