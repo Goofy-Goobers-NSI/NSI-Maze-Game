@@ -10,7 +10,7 @@ OPPOSITE = {E: W, W: E, N: S, S: N}
 COORD_LIGNE_MURS = {0 : [(0, 0), (40, 0)], 1 : [(40, 0), (40, 40)], 2 : [(40, 40), (0, 40)], 3 : [(0, 40), (0, 0)]}
 
 class Maze:
-    def __init__(self, largeur=15, hauteur=15, cell_size=40, offset_x=340, offset_y=60):
+    def __init__(self, largeur=15, hauteur=15, cell_size=40, offset_x=80, offset_y=150):
         self.largeur = largeur
         self.hauteur = hauteur
         self.cell_size = cell_size
@@ -65,6 +65,7 @@ class Maze:
             for x in range(self.largeur):
                 cell = self.grille[x][y]
                 self.draw_cells(screen, cell)
+        Maze.draw_walls(self,screen)
 
     def draw_cells(self, screen, cell):
         """Draw one cell and its walls"""
@@ -81,14 +82,16 @@ class Maze:
                 pygame.draw.rect(screen, "red", [x, y, s, s])
         else:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
-    
+
     def draw_walls(self,screen):
+        # Draw the walls
         for cell in self.in_maze:
             for i in range(4):
                 if not(cell.walls[i]):
                     start_pos =  (self.offset_x + cell.x * self.cell_size + COORD_LIGNE_MURS[i][0][0]-1,self.offset_y + cell.y * self.cell_size + COORD_LIGNE_MURS[i][0][1]-1)
                     end_pos = (self.offset_x + cell.x * self.cell_size + COORD_LIGNE_MURS[i][1][0]-1,self.offset_y + cell.y * self.cell_size + COORD_LIGNE_MURS[i][1][1]-1)
                     pygame.draw.line(screen,"white",start_pos,end_pos,2)
+    
 
 
     def random_walk(self, start_cell):

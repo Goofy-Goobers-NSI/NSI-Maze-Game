@@ -5,11 +5,11 @@ from player import Player
 # Pygame setup
 pygame.init()
 pygame.mixer.init()
-screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((1440,900))
 clock = pygame.time.Clock()
 running = True
 
-wall_hitting_sound = pygame.mixer.Sound("wall_hit_sound.wav")
+wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 # Create the Maze
 maze = Maze(15, 15)
 maze.choose_start()
@@ -42,12 +42,8 @@ while running:
             else:
                 wall_hitting_sound.play()
             
-            
-        
-
     screen.fill("white")
     maze.draw_maze(screen)
-    maze.draw_walls(screen)
     player.draw_player(screen,maze)
 
     pygame.display.flip()
