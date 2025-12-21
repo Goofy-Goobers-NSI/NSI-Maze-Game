@@ -4,10 +4,12 @@ from player import Player
 
 # Pygame setup
 pygame.init()
+pygame.mixer.init()
 screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 running = True
 
+wall_hitting_sound = pygame.mixer.Sound("wall_hit_sound.wav")
 # Create the Maze
 maze = Maze(15, 15)
 maze.choose_start()
@@ -22,15 +24,23 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
             if player.check_wall_collisions(0,maze):
                 player.move_player(0)
+            else:
+                wall_hitting_sound.play()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             if player.check_wall_collisions(1,maze):
                 player.move_player(1)
+            else:
+                wall_hitting_sound.play()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             if player.check_wall_collisions(2,maze):
                 player.move_player(2)
+            else:
+                wall_hitting_sound.play()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             if player.check_wall_collisions(3,maze):
                 player.move_player(3)
+            else:
+                wall_hitting_sound.play()
             
             
         

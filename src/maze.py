@@ -49,7 +49,7 @@ class Maze:
         self.end = self.grille[end_x][end_y]
         return self.end
     
-    def remove_outer_walls(self,cell):
+    def remove_outer_walls(self,cell,screen):
         if cell.x == 0:
             cell.remove_walls([-1,0])
         elif cell.x == 14:
@@ -74,7 +74,7 @@ class Maze:
 
         # If start or end, color red and remove outside corresponding wall
         if cell == self.start or cell == self.end:
-            Maze.remove_outer_walls(self,cell)
+            Maze.remove_outer_walls(self,cell,screen)
         else:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
     
