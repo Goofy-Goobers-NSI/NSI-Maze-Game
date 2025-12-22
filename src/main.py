@@ -11,12 +11,12 @@ running = True
 
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
-game_font = pygame.font.Font("assets\_fonts\Star Crush.ttf",90)
-game_font2 = pygame.font.Font("assets\_fonts\Star Crush.ttf",96)
-victory_text1 = game_font.render("Congratulations",True,(220,220,30))
-victory_text2 = game_font.render("you win",True,(220,220,30))
-victory_text11 = game_font.render("Congratulations",True,(0,0,0))
-victory_text21 = game_font.render("you win",True,(0,0,0))
+game_font = pygame.font.Font("assets\_fonts\Pixelfy.ttf",70)
+game_font2 = pygame.font.Font("assets\_fonts\Pixelfy.ttf",110)
+victory_text1 = game_font.render("Congrats, you",True,(220,220,30))
+victory_text2 = game_font2.render("win !",True,(220,220,30))
+victory_text11 = game_font.render("Congrats, you",True,(0,0,0))
+victory_text21 = game_font2.render("win !",True,(0,0,0))
 # Create the Maze
 maze = Maze(15, 15)
 maze.generate_maze()
@@ -56,10 +56,10 @@ while running:
     maze.draw_mazes(screen)
     player.draw_player(screen,maze)
     if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.
-        screen.blit(victory_text11,(76,346))
-        screen.blit(victory_text21,(231,446))
-        screen.blit(victory_text1,(81,350))
-        screen.blit(victory_text2,(235,450))
+        screen.blit(victory_text11,(121,346))
+        screen.blit(victory_text21,(251,436))
+        screen.blit(victory_text1,(125,350))
+        screen.blit(victory_text2,(255,440))
 
     pygame.display.flip()
     clock.tick(60)
