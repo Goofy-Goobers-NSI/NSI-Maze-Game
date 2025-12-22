@@ -42,8 +42,7 @@ while running:
             
     screen.fill("white")
 
-    maze.draw_maze(screen)
-    maze.draw_second_maze(screen)
+    maze.draw_mazes(screen)
     player.draw_player(screen,maze)
 
     pygame.display.flip()

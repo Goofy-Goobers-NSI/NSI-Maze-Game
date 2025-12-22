@@ -63,6 +63,10 @@ class Maze:
         else:
             cell.remove_walls([0,1])
 
+    def draw_mazes(self,screen):
+        Maze.draw_maze(self,screen)
+        Maze.draw_second_maze(self,screen)
+
     def draw_maze(self, screen):
         # Draw the first maze grid and highlight start/end
         for y in range(self.hauteur):
