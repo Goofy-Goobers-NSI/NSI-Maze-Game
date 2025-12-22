@@ -49,6 +49,7 @@ while running:
     maze.draw_maze(screen)
     maze.draw_walls(screen)
     player.draw_player(screen,maze)
+    player.check_victoire(maze)
 
     pygame.display.flip()
     clock.tick(60)

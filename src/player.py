@@ -20,6 +20,10 @@ class Player:
             self.y += 1
         else:
             self.x -= 1
+
     def check_wall_collisions(self,direction,maze):
         corresponding_wall = maze.grille[self.x][self.y].walls[direction]
         return not(corresponding_wall)
+    
+    def check_victoire(self,maze):
+        return self.x == maze.end.x and self.y == maze.end.y
