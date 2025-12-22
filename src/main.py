@@ -10,6 +10,7 @@ clock = pygame.time.Clock()
 running = True
 
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
+movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
 # Create the Maze
 maze = Maze(15, 15)
 maze.generate_maze()
@@ -22,21 +23,25 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
             if player.check_wall_collisions(0,maze):
                 player.move_player(0)
+                movement_woosh_sound.play()
             else:
                 wall_hitting_sound.play()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
             if player.check_wall_collisions(1,maze):
                 player.move_player(1)
+                movement_woosh_sound.play()
             else:
                 wall_hitting_sound.play()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
             if player.check_wall_collisions(2,maze):
                 player.move_player(2)
+                movement_woosh_sound.play()
             else:
                 wall_hitting_sound.play()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
             if player.check_wall_collisions(3,maze):
                 player.move_player(3)
+                movement_woosh_sound.play()
             else:
                 wall_hitting_sound.play()
             
