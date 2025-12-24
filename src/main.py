@@ -1,6 +1,7 @@
 import pygame
 from maze import Maze
 from player import Player
+from solver import Solver
 
 # Pygame setup
 pygame.init()
@@ -9,13 +10,19 @@ screen = pygame.display.set_mode((1440,900))
 clock = pygame.time.Clock()
 running = True
 
+# Sounds
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
+
 # Create the Maze
 maze = Maze(15, 15)
 maze.choose_start()
 maze.choose_end()
 maze.generate_maze()
+
 player = Player(maze.start.x,maze.start.y)
+
+solver = Solver(maze)
+solution_path = solver.solve()
 
 while running:
     for event in pygame.event.get():
@@ -46,8 +53,9 @@ while running:
 
     maze.draw_maze(screen)
     maze.draw_second_maze(screen)
-    player.draw_player(screen,maze)
+    solver.draw_solution(screen, maze.second_maze_offset_x, maze.second_maze_offset_y)
 
+    player.draw_player(screen,maze)
     pygame.display.flip()
     clock.tick(60)
 
