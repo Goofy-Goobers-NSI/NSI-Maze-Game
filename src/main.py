@@ -1,6 +1,7 @@
 import pygame
 from maze import Maze
 from player import Player
+from solver import Solver
 
 # Pygame setup
 pygame.init()
@@ -25,7 +26,11 @@ victory_text21 = game_font2.render("win !",True,(0,0,0))
 # Create the Maze
 maze = Maze(15, 15)
 maze.generate_maze()
+
 player = Player(maze.start.x,maze.start.y)
+
+solver = Solver(maze)
+solution_path = solver.solve()
 
 while running:
     if game_state == "menu":
