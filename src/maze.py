@@ -156,7 +156,9 @@ class Maze:
         Generates the maze with Wilson's Algorithm,
         keeps looping until every cell is in the maze, if 
         """
-        while len(self.in_maze) < len(self.grille)**2:
+        Maze.choose_start(self)
+        Maze.choose_end(self)
+        while len(self.in_maze) < self.largeur*self.hauteur:
             random_cell = Maze.choose_random_cell(self)
             while random_cell in self.in_maze:
                 random_cell = Maze.choose_random_cell(self)

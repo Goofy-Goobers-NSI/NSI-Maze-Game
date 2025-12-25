@@ -15,8 +15,6 @@ wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 
 # Create the Maze
 maze = Maze(15, 15)
-maze.choose_start()
-maze.choose_end()
 maze.generate_maze()
 
 player = Player(maze.start.x,maze.start.y)
