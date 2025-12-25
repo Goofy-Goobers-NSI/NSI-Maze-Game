@@ -9,19 +9,25 @@ pygame.mixer.init()
 screen = pygame.display.set_mode((1440,900))
 clock = pygame.time.Clock()
 running = True
-game_state = "game"
+game_state = "menu"
 # Initializing variables for images 
-menu_background = pygame.image.load("assets\images\maze_menu_background.jpg")
+#menu_background = pygame.image.load("assets\images\maze_menu_background.jpg")
 # Initializing variables for sound
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
 # Initializing variables for text
-game_font = pygame.font.Font("assets\_fonts\Pixelfy.ttf",70)
-game_font2 = pygame.font.Font("assets\_fonts\Pixelfy.ttf",110)
+game_font = pygame.font.Font("assets\_fonts\Racing.otf",150)
+game_font2 = pygame.font.Font("assets\_fonts\Racing.otf",156)
 victory_text1 = game_font.render("Congrats, you",True,(220,220,30))
 victory_text2 = game_font2.render("win !",True,(220,220,30))
 victory_text11 = game_font.render("Congrats, you",True,(0,0,0))
 victory_text21 = game_font2.render("win !",True,(0,0,0))
+game_title1 = game_font.render("MAZE",True,(177, 18, 38))
+game_title11 = game_font.render("RACERS",True,(177, 18, 38))
+game_title2 = game_font.render("MAZE",True,(250,200,135))
+game_title22 = game_font.render("RACERS",True,(250,200,135))
+game_title3 = game_font2.render("MAZE",True,(43,43,43))
+game_title33 = game_font2.render("RACERS",True,(43,43,43))
 
 # Create the Maze
 maze = Maze(15, 15)
@@ -37,6 +43,12 @@ while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        screen.fill("white")
+        pygame.draw.rect(screen,(250,200,135),[375,120,650,350])
+        pygame.draw.rect(screen,(43,43,43),[375,120,650,350],7)    
+        screen.blit(game_title1,(475,135))
+        screen.blit(game_title11,(400,255))
+              
     else:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
