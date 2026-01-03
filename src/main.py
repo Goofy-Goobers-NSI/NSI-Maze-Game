@@ -48,7 +48,6 @@ while running:
         current_time = pygame.time.get_ticks()
         screen.fill("white")
         menu_background.move_background(screen,current_time)
-        print(menu_background.cooldown,current_time)
         pygame.draw.rect(screen,(250,200,135),[375,120,650,350])
         pygame.draw.rect(screen,(43,43,43),[375,120,650,350],7)    
         screen.blit(game_title1,(475,135))
