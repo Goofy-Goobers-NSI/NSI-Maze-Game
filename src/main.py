@@ -2,6 +2,7 @@ import pygame
 from maze import Maze
 from player import Player
 from solver import Solver
+from menu import Background
 
 # Pygame setup
 pygame.init()
@@ -11,7 +12,8 @@ clock = pygame.time.Clock()
 running = True
 game_state = "menu"
 # Initializing variables for images 
-#menu_background = pygame.image.load("assets\images\maze_menu_background.jpg")
+background_image = pygame.image.load("assets\images\maze_menu_background.jpg").convert_alpha()
+menu_background = Background(-1780,-2050,background_image)
 # Initializing variables for sound
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
@@ -43,7 +45,10 @@ while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+        current_time = pygame.time.get_ticks()
         screen.fill("white")
+        menu_background.move_background(screen,current_time)
+        print(menu_background.cooldown,current_time)
         pygame.draw.rect(screen,(250,200,135),[375,120,650,350])
         pygame.draw.rect(screen,(43,43,43),[375,120,650,350],7)    
         screen.blit(game_title1,(475,135))
