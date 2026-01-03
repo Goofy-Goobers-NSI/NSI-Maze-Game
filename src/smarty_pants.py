@@ -1,6 +1,6 @@
 import pygame
 import random
-from maze import N, E, S, W, DX, DY
+from maze import N, E, S, W, DX, DY, OPPOSITE
 
 class Smartypants:
     def __init__(self, maze, solver, mistake_chance=0.5):
@@ -9,7 +9,7 @@ class Smartypants:
         self.current_i = 0
         self.solution_path = solver.solution_path
         self.current_cell = self.solution_path[0]
-        self.speed = 400  # milliseconds per move
+        self.speed = 200  # milliseconds per move
         self.last_move_time = pygame.time.get_ticks()
 
         self.mistake_chance = mistake_chance
@@ -62,41 +62,11 @@ class Smartypants:
                 if DX[dir] == dx and DY[dir] == dy:
                     good_dir = dir
                     break
-
             if good_dir is not None and good_dir in valid_directions:
                 valid_directions.remove(good_dir)
+                valid_directions.remove(OPPOSITE[good_dir])
             
-        random.shuffle(valid_directions) # I hate this
-        mistake_found = False
-
-        for dir in valid_directions:
-            # most of the time a valid direction is just backwards so the algorithm ends up walking backwards
-            # fuh naw lobotomy
-            if not current.walls[dir]:
-                ny = current.y + DY[dir]
-                nx = current.x + DX[dir]
-
-                if 0 <= nx < self.maze.largeur and 0 <= ny < self.maze.hauteur:
-                    next_cell = self.maze.grille[nx][ny]
-                    self.mistake_path.append(next_cell)
-                    mistake_length = random.randint(2, 8)
-
-                    for i in range(mistake_length - 1):
-                        current_mistake = self.mistake_path[-1]
-                        if not current_mistake.walls[dir]:
-                            mistake_nx = current_mistake.x + DX[dir]
-                            mistake_ny = current_mistake.y + DY[dir]
-                            if 0 <= mistake_nx < self.maze.largeur and 0 <= mistake_ny < self.maze.hauteur:
-                                self.mistake_path.append(self.maze.grille[mistake_nx][mistake_ny])
-                    
-                    mistake_found = True
-                    break
-
-        if mistake_found:
-            self.mistake_i = 0
-            self.error_cooldown = pygame.time.get_ticks() + 2000  # 2 seconds
-        else:
-            self.making_mistake = False
+        
 
     def follow_mistake_path(self):
         if self.mistake_i >= len(self.mistake_path):
