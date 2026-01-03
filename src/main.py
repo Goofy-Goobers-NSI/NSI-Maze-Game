@@ -19,8 +19,8 @@ wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
 # Initializing variables for text
 game_font = pygame.font.Font("assets\_fonts\Racing.otf",150)
-victory_text1 = game_font.render("Congrats, you",True,(220,220,30))
-victory_text11 = game_font.render("Congrats, you",True,(0,0,0))
+victory_text1 = game_font.render("Congrats, you win",True,(220,220,30))
+victory_text11 = game_font.render("Congrats, you win",True,(0,0,0))
 game_title1 = game_font.render("MAZE",True,(177, 18, 38))
 game_title11 = game_font.render("RACERS",True,(177, 18, 38))
 
@@ -103,8 +103,8 @@ while running:
         maze.draw_mazes(screen)
         player.draw_player(screen,maze)
         if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.
-            screen.blit(victory_text11,(121,346))
-            screen.blit(victory_text1,(125,350))
+            screen.blit(victory_text11,(21,346))
+            screen.blit(victory_text1,(25,350))
             
     pygame.display.flip()
     clock.tick(60)
