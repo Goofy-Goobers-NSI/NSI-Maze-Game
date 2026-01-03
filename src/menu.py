@@ -1,5 +1,6 @@
 # Ce fichier sera une sorte de librairie de fonctions pour créer le menu principal du jeu
 import random
+import pygame
 class Background:
     def __init__(self,x,y,image):
         self.x = x
@@ -32,3 +33,24 @@ class Background:
             self.y += self.y_movement * self.speed
         # Actually rendering the image
         screen.blit(self.image,(self.x,self.y))
+
+class Button:
+    def __init__(self,x,y,width,height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+    
+    def is_hovered(self):
+        mouse_x,mouse_y = pygame.mouse.get_pos()
+        return self.x <= mouse_x <=self.x + self.width and self.y <= mouse_y <= self.y + self.height
+    
+    def is_clicked(self):
+        for event in pygame.event.get():
+            return event.type == pygame.MOUSEBUTTONDOWN and self.is_hovered()
+    
+    def render_button(self,screen):
+        if self.is_hovered():
+            pygame.draw.rect(screen,(169,169,169),[self.x,self.y,self.width,self.height])
+        else:
+            pygame.draw.rect(screen,(69,69,69),[self.x,self.y,self.width,self.height])

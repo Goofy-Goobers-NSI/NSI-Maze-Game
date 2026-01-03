@@ -2,7 +2,7 @@ import pygame
 from maze import Maze
 from player import Player
 from solver import Solver
-from menu import Background
+from menu import Background,Button
 
 # Pygame setup
 pygame.init()
@@ -19,17 +19,11 @@ wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
 # Initializing variables for text
 game_font = pygame.font.Font("assets\_fonts\Racing.otf",150)
-game_font2 = pygame.font.Font("assets\_fonts\Racing.otf",156)
 victory_text1 = game_font.render("Congrats, you",True,(220,220,30))
-victory_text2 = game_font2.render("win !",True,(220,220,30))
 victory_text11 = game_font.render("Congrats, you",True,(0,0,0))
-victory_text21 = game_font2.render("win !",True,(0,0,0))
 game_title1 = game_font.render("MAZE",True,(177, 18, 38))
 game_title11 = game_font.render("RACERS",True,(177, 18, 38))
-game_title2 = game_font.render("MAZE",True,(250,200,135))
-game_title22 = game_font.render("RACERS",True,(250,200,135))
-game_title3 = game_font2.render("MAZE",True,(43,43,43))
-game_title33 = game_font2.render("RACERS",True,(43,43,43))
+
 
 # Create the Maze
 maze = Maze(15, 15)
@@ -47,12 +41,34 @@ while running:
                 running = False
         current_time = pygame.time.get_ticks()
         screen.fill("white")
+
+        # Background doing it's thing
         menu_background.move_background(screen,current_time)
-        pygame.draw.rect(screen,(250,200,135),[375,120,650,350])
-        pygame.draw.rect(screen,(43,43,43),[375,120,650,350],7)    
-        screen.blit(game_title1,(475,135))
-        screen.blit(game_title11,(400,255))
-              
+
+        # Logo
+        pygame.draw.rect(screen,(250,200,135),[375,70,650,350])
+        pygame.draw.rect(screen,(43,43,43),[375,70,650,350],7)
+        screen.blit(game_title1,(475,85))
+        screen.blit(game_title11,(400,205))
+
+        # Play button (Don't forget to subscribe so i get the 10M platinum one)
+        play_button = Button(250,480,900,150)
+        play_button.render_button(screen)
+        if play_button.is_clicked():
+            game_state = "game"
+        
+        # Settings button
+        settings_button = Button(250,650,900,150)
+        settings_button.render_button(screen)
+        
+        # Leaderboard button
+        leaderboard_button = Button(20,320,130,130)
+        leaderboard_button.render_button(screen)
+
+        # Cat button :3
+        cat_button = Button(1290,320,130,130)
+        cat_button.render_button(screen)
+
     else:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -88,10 +104,8 @@ while running:
         player.draw_player(screen,maze)
         if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.
             screen.blit(victory_text11,(121,346))
-            screen.blit(victory_text21,(251,436))
             screen.blit(victory_text1,(125,350))
-            screen.blit(victory_text2,(255,440))
-
+            
     pygame.display.flip()
     clock.tick(60)
 
