@@ -113,10 +113,13 @@ while running:
         if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.
             screen.blit(victory_text11,(21,346))
             screen.blit(victory_text1,(25,350))
+            timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(220,220,30)) 
         else:
             timer += 1
-            timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) # In order to update the timer variable
-        # Show the timer
+            if timer % 60 < 5 or 10 < timer % 60 < 15:
+                timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(177,18,38))
+            else:
+                timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) 
         screen.blit(timer_text,(450,30))
             
     pygame.display.flip()
