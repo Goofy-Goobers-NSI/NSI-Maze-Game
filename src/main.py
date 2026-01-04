@@ -11,19 +11,26 @@ screen = pygame.display.set_mode((1440,900))
 clock = pygame.time.Clock()
 running = True
 game_state = "menu"
+
+# Timer
+timer = 0
+
 # Initializing variables for images 
 background_image = pygame.image.load("assets\images\maze_menu_background.jpg").convert_alpha()
 menu_background = Background(-1780,-2050,background_image)
+
 # Initializing variables for sound
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
+
 # Initializing variables for text
 game_font = pygame.font.Font("assets\_fonts\Racing.otf",150)
+game_font2 = pygame.font.Font("assets\_fonts\Racing.otf",100)
 victory_text1 = game_font.render("Congrats, you win",True,(220,220,30))
 victory_text11 = game_font.render("Congrats, you win",True,(0,0,0))
 game_title1 = game_font.render("MAZE",True,(177, 18, 38))
 game_title11 = game_font.render("RACERS",True,(177, 18, 38))
-
+timer_text = game_font2.render(f"Time : {timer}",True,(50,50,50))
 
 # Create the Maze
 maze = Maze(15, 15)
@@ -33,6 +40,7 @@ player = Player(maze.start.x,maze.start.y)
 
 solver = Solver(maze)
 solution_path = solver.solve()
+
 
 while running:
     if game_state == "menu":
@@ -105,6 +113,11 @@ while running:
         if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.
             screen.blit(victory_text11,(21,346))
             screen.blit(victory_text1,(25,350))
+        else:
+            timer += 1
+            timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) # In order to update the timer variable
+        # Show the timer
+        screen.blit(timer_text,(450,30))
             
     pygame.display.flip()
     clock.tick(60)
