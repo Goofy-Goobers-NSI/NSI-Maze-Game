@@ -9,6 +9,7 @@ pygame.init()
 pygame.mixer.init()
 screen = pygame.display.set_mode((1440,900))
 clock = pygame.time.Clock()
+pygame.display.set_caption("Maze racers")
 running = True
 game_state = "menu"
 
@@ -18,7 +19,14 @@ timer = 0
 # Initializing variables for images 
 background_image = pygame.image.load("assets\images\maze_menu_background.jpg").convert_alpha()
 menu_background = Background(-1780,-2050,background_image)
-
+play_button_image = pygame.image.load("assets\images\play.png").convert_alpha()
+play_button_image = pygame.transform.scale(play_button_image,(130,130))
+settings_image = pygame.image.load("assets\images\cog.png").convert_alpha()
+settings_image = pygame.transform.scale(settings_image,(130,130))
+leaderboard_image = pygame.image.load("assets\images\_trophy.png").convert_alpha()
+leaderboard_image = pygame.transform.scale(leaderboard_image,(110,95))
+CAT = pygame.image.load("assets\images\cat.png").convert_alpha()
+CAT = pygame.transform.scale(CAT,(110,82))
 # Initializing variables for sound
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
@@ -48,6 +56,7 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
         current_time = pygame.time.get_ticks()
+        has_won = False
         screen.fill("white")
 
         # Background doing it's thing
@@ -62,20 +71,28 @@ while running:
         # Play button (Don't forget to subscribe so i get the 10M platinum one)
         play_button = Button(250,480,900,150)
         play_button.render_button(screen)
+        screen.blit(play_button_image,(650,490))
         if play_button.is_clicked():
             game_state = "game"
+            maze.generate_maze()
+            player.x = maze.start.x
+            player.y = maze.start.y
+            timer = 0
         
         # Settings button
         settings_button = Button(250,650,900,150)
         settings_button.render_button(screen)
+        screen.blit(settings_image,(635,660))
         
         # Leaderboard button
         leaderboard_button = Button(20,320,130,130)
         leaderboard_button.render_button(screen)
+        screen.blit(leaderboard_image,(30,337))
 
         # Cat button :3
         cat_button = Button(1290,320,130,130)
         cat_button.render_button(screen)
+        screen.blit(CAT,(1300,344))
 
     else:
         for event in pygame.event.get():
@@ -114,6 +131,7 @@ while running:
             screen.blit(victory_text11,(21,346))
             screen.blit(victory_text1,(25,350))
             timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(220,220,30)) 
+            has_won = True
         else:
             timer += 1
             if timer % 60 < 5 or 10 < timer % 60 < 15:
@@ -121,8 +139,11 @@ while running:
             else:
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) 
         screen.blit(timer_text,(450,30))
-            
+        
     pygame.display.flip()
+    if has_won:
+            pygame.time.wait(3000)
+            game_state = "menu"
     clock.tick(60)
 
 pygame.quit()

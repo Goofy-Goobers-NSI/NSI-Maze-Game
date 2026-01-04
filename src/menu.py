@@ -47,7 +47,8 @@ class Button:
     
     def is_clicked(self):
         for event in pygame.event.get():
-            return event.type == pygame.MOUSEBUTTONDOWN and self.is_hovered()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                return self.is_hovered()
     
     def render_button(self,screen):
         if self.is_hovered():

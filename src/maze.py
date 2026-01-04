@@ -72,7 +72,7 @@ class Maze:
         for y in range(self.hauteur):
             for x in range(self.largeur):
                 cell = self.grille[x][y]
-                self.draw_cells(screen, cell, self.offset_x, self.offset_y)
+                self.draw_cell(screen, cell, self.offset_x, self.offset_y)
         self.draw_walls(screen, self.offset_x, self.offset_y)
 
     def draw_second_maze(self, screen):
@@ -80,21 +80,20 @@ class Maze:
         for y in range(self.hauteur):
             for x in range(self.largeur):
                 cell = self.grille[x][y]
-                self.draw_cells(screen, cell, self.second_maze_offset_x, self.second_maze_offset_y)
+                self.draw_cell(screen, cell, self.second_maze_offset_x, self.second_maze_offset_y)
         self.draw_walls(screen, self.second_maze_offset_x, self.second_maze_offset_y)
 
-    def draw_cells(self, screen, cell, offset_x, offset_y):
+    def draw_cell(self, screen, cell, offset_x, offset_y):
         """Draw one cell and its walls at specified offset"""
         x = offset_x + cell.x * self.cell_size
         y = offset_y + cell.y * self.cell_size
         s = self.cell_size
 
-        # If start or end, color green or red and remove outside corresponding wall
-        if cell == self.start or cell == self.end:
-            if cell == self.start:
-                pygame.draw.rect(screen, "green", [x, y, s, s])
-            elif cell == self.end:
-                pygame.draw.rect(screen, "red", [x, y, s, s])
+        # If start or end, color green or red 
+        if cell == self.start:
+            pygame.draw.rect(screen, "green", [x, y, s, s])
+        elif cell == self.end:
+            pygame.draw.rect(screen, "red", [x, y, s, s])
         else:
             pygame.draw.rect(screen, "black", [x, y, s, s], 1)
 
