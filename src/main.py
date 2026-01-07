@@ -77,10 +77,12 @@ while running:
         screen.blit(play_button_image,(650,490))
         if play_button.is_hovered() and click: #  Could be simplified but there are technical issues when I do
             game_state = "game"
+            maze = Maze(15,15)
             maze.generate_maze()
             player.x = maze.start.x
             player.y = maze.start.y
             timer = 0
+            first_time = True
         
         # Settings button
         settings_button = Button(250,650,900,150)
@@ -142,7 +144,10 @@ while running:
             else:
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) 
         screen.blit(timer_text,(450,30))
-        
+        pygame.display.update()
+        if first_time:
+            pygame.time.wait(3000)
+        first_time = False
     pygame.display.flip()
     if has_won:
             pygame.time.wait(3000)
