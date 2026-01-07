@@ -45,11 +45,6 @@ class Button:
         mouse_x,mouse_y = pygame.mouse.get_pos()
         return self.x <= mouse_x <=self.x + self.width and self.y <= mouse_y <= self.y + self.height
     
-    def is_clicked(self):
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                return self.is_hovered()
-    
     def render_button(self,screen):
         if self.is_hovered():
             pygame.draw.rect(screen,(169,169,169),[self.x,self.y,self.width,self.height])

@@ -51,10 +51,13 @@ solution_path = solver.solve()
 
 
 while running:
+    click = False
     if game_state == "menu":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                click = True
         current_time = pygame.time.get_ticks()
         has_won = False
         screen.fill("white")
@@ -72,7 +75,7 @@ while running:
         play_button = Button(250,480,900,150)
         play_button.render_button(screen)
         screen.blit(play_button_image,(650,490))
-        if play_button.is_clicked():
+        if play_button.is_hovered() and click: #  Could be simplified but there are technical issues when I do
             game_state = "game"
             maze.generate_maze()
             player.x = maze.start.x
