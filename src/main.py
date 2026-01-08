@@ -137,6 +137,7 @@ while running:
             screen.blit(victory_text1,(25,350))
             timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(220,220,30)) 
             has_won = True
+            print(round(timer/60,2))
         else:
             timer += 1
             if timer % 60 < 5 or 10 < timer % 60 < 15:
