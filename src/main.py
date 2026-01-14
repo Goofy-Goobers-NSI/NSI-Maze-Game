@@ -1,4 +1,4 @@
-import pygame
+import pygame,time
 from maze import Maze
 from player import Player
 from solver import Solver
@@ -51,14 +51,15 @@ solution_path = solver.solve()
 
 
 while running:
+    print(timer)
     click = False
+    current_time = pygame.time.get_ticks()
     if game_state == "menu":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 click = True
-        current_time = pygame.time.get_ticks()
         has_won = False
         screen.fill("white")
 
@@ -82,7 +83,7 @@ while running:
             player.x = maze.start.x
             player.y = maze.start.y
             timer = 0
-            first_time = True
+            first_time_cooldown = current_time + 3000
         
         # Settings button
         settings_button = Button(250,650,900,150)
@@ -103,25 +104,25 @@ while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_z and first_time_cooldown < current_time:
                 if player.check_wall_collisions(0,maze):
                     player.move_player(0)
                     movement_woosh_sound.play()
                 else:
                     wall_hitting_sound.play()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_d and first_time_cooldown < current_time:
                 if player.check_wall_collisions(1,maze):
                     player.move_player(1)
                     movement_woosh_sound.play()
                 else:
                     wall_hitting_sound.play()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s and first_time_cooldown < current_time:
                 if player.check_wall_collisions(2,maze):
                     player.move_player(2)
                     movement_woosh_sound.play()
                 else:
                     wall_hitting_sound.play()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_q and first_time_cooldown < current_time:
                 if player.check_wall_collisions(3,maze):
                     player.move_player(3)
                     movement_woosh_sound.play()
@@ -138,6 +139,11 @@ while running:
             timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(220,220,30)) 
             has_won = True
             print(round(timer/60,2))
+        if first_time_cooldown > current_time:
+            if timer % 60 < 5 or 10 < timer % 60 < 15:
+                timer_text = game_font2.render(f"Time : {round((first_time_cooldown-current_time)/1000,2)}",True,(177,18,38))
+            else:
+                timer_text = game_font2.render(f"Time : {round((first_time_cooldown-current_time)/1000,2)}",True,(50,50,50)) 
         else:
             timer += 1
             if timer % 60 < 5 or 10 < timer % 60 < 15:
@@ -145,10 +151,7 @@ while running:
             else:
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) 
         screen.blit(timer_text,(450,30))
-        pygame.display.update()
-        if first_time:
-            pygame.time.wait(3000)
-        first_time = False
+        pygame.display.flip()
     pygame.display.flip()
     if has_won:
             pygame.time.wait(3000)
