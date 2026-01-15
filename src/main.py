@@ -27,6 +27,10 @@ leaderboard_image = pygame.image.load("assets\images\_trophy.png").convert_alpha
 leaderboard_image = pygame.transform.scale(leaderboard_image,(110,95))
 CAT = pygame.image.load("assets\images\cat.png").convert_alpha()
 CAT = pygame.transform.scale(CAT,(110,82))
+light_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
+light_overlay.fill((200,200,200,50))
+dark_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
+dark_overlay.fill((200,200,200,200))
 # Initializing variables for sound
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
@@ -34,6 +38,8 @@ movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
 # Initializing variables for text
 game_font = pygame.font.Font("assets\_fonts\Racing.otf",150)
 game_font2 = pygame.font.Font("assets\_fonts\Racing.otf",100)
+game_font3 = pygame.font.Font("assets\_fonts\Racing.otf",350)
+game_font4 = pygame.font.Font("assets\_fonts\Racing.otf",375)
 victory_text1 = game_font.render("Congrats, you win",True,(220,220,30))
 victory_text11 = game_font.render("Congrats, you win",True,(0,0,0))
 game_title1 = game_font.render("MAZE",True,(177, 18, 38))
@@ -65,6 +71,7 @@ while running:
 
         # Background doing it's thing
         menu_background.move_background(screen,current_time)
+        screen.blit(light_overlay,(0,0))
 
         # Logo
         pygame.draw.rect(screen,(250,200,135),[375,70,650,350])
@@ -130,27 +137,40 @@ while running:
                     wall_hitting_sound.play()
             
         screen.fill("white")
-
-        maze.draw_mazes(screen)
-        player.draw_player(screen,maze)
-        if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.
-            screen.blit(victory_text11,(21,346))
-            screen.blit(victory_text1,(25,350))
-            timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(220,220,30)) 
-            has_won = True
-            print(round(timer/60,2))
         if first_time_cooldown > current_time:
-            if timer % 60 < 5 or 10 < timer % 60 < 15:
-                timer_text = game_font2.render(f"Time : {round((first_time_cooldown-current_time)/1000,2)}",True,(177,18,38))
+            screen.blit(dark_overlay,(0,0))
+            maze.draw_mazes(screen,(210,210,210))
+            player.draw_player(screen,maze)
+            timer_text = game_font3.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(215,210,15))
+            timer_text2 = game_font4.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(0,0,0))
+            fake_timer = game_font2.render(f"Time : 0",True,(50,50,50))
+            screen.blit(fake_timer,(475,30))
+            if first_time_cooldown-current_time <= 1000:
+                screen.blit(timer_text2,(585,195))
+                screen.blit(timer_text,(600,210))
             else:
-                timer_text = game_font2.render(f"Time : {round((first_time_cooldown-current_time)/1000,2)}",True,(50,50,50)) 
+                screen.blit(timer_text2,(550,195))
+                screen.blit(timer_text,(565,210))
+            
         else:
+            screen.blit(light_overlay,(0,0))
             timer += 1
             if timer % 60 < 5 or 10 < timer % 60 < 15:
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(177,18,38))
             else:
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) 
-        screen.blit(timer_text,(450,30))
+            screen.blit(timer_text,(450,30))
+            maze.draw_mazes(screen,(243,243,243))
+            player.draw_player(screen,maze)
+            if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.
+                screen.blit(victory_text11,(21,346))
+                screen.blit(victory_text1,(25,350))
+                timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(220,220,30)) 
+                timer_text2 = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50))
+                screen.blit(timer_text2,(448,28))
+                screen.blit(timer_text,(450,30))                 
+                has_won = True
+                print(round(timer/60,2))
         pygame.display.flip()
     pygame.display.flip()
     if has_won:
