@@ -1,9 +1,9 @@
-import pygame,time
+import pygame,json,os
 from maze import Maze
 from player import Player
 from solver import Solver
-from menu import Background,Button
-
+from menu import Background,Button,add_time
+leaderboard_file = "leaderboard.json"
 # Pygame setup
 pygame.init()
 pygame.mixer.init()
@@ -157,7 +157,8 @@ while running:
     if has_won == [True,False]:
         cooldown -= 1
     if has_won == [True,False] and cooldown <= 0:
-        print(round(timer/60,2))
+        final_time = round(timer/60,2)
+        add_time("all_times",final_time)
         game_state = "menu"
 
 

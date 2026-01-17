@@ -1,6 +1,8 @@
 # Ce fichier sera une sorte de librairie de fonctions pour créer le menu principal du jeu
 import random
 import pygame
+import os, json
+leaderboard_file = "assets\leaderboard.json"
 class Background:
     def __init__(self,x,y,image):
         self.x = x
@@ -50,3 +52,25 @@ class Button:
             pygame.draw.rect(screen,(169,169,169),[self.x,self.y,self.width,self.height])
         else:
             pygame.draw.rect(screen,(69,69,69),[self.x,self.y,self.width,self.height])
+
+# Functions for the leaderboard 
+# I used chatgpt for this code but I can fully explain it, I swear I can, please don't burn me alive
+
+def load_leaderboard(): # Opens the leaderboard file
+    with open(leaderboard_file, "r") as f:
+        return json.load(f)
+    
+def save_leaderboard(data): # Will be called to save the changes made to the leaderboard
+    with open(leaderboard_file, "w") as f:
+        json.dump(data, f, indent=4)
+
+def add_time(category,new_time):
+    leaderboard = load_leaderboard()
+    # Adds the new time, 'A NEW CHALLENGER HAS ARRIVED'
+    leaderboard[category].append(new_time)
+    # Sorts the times from lowest to highest
+    leaderboard[category].sort()
+    # Keeps only the first ten values, the others ones are not sigma enough
+    leaderboard[category] = leaderboard[category][:10]
+    # Saves changes made, because duh
+    save_leaderboard(leaderboard)
