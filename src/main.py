@@ -109,12 +109,11 @@ while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN:
-                print("hello?",event.key)
+            elif event.type == pygame.KEYDOWN: # This accounts for movements of the player
                 player.player_movement(event.key,movement_keys,maze,first_time_cooldown,current_time,has_won)
             
         screen.fill("white")
-        if first_time_cooldown > current_time:
+        if first_time_cooldown > current_time: # What happens during the 3,2,1 countdown
             screen.blit(dark_overlay,(0,0))
             maze.draw_mazes(screen,(210,210,210))
             player.draw_player(screen,maze)
@@ -122,7 +121,7 @@ while running:
             timer_text2 = game_font4.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(0,0,0))
             fake_timer = game_font2.render(f"Time : 0",True,(50,50,50))
             screen.blit(fake_timer,(475,30))
-            if first_time_cooldown-current_time <= 1000:
+            if first_time_cooldown-current_time <= 1000: # Because '1' is thinner than '2' and '3', we push it to the right to make it look like it didn't move
                 screen.blit(timer_text2,(585,195))
                 screen.blit(timer_text,(600,210))
             else:
@@ -133,13 +132,14 @@ while running:
             screen.blit(light_overlay,(0,0))
             if has_won[0] == False:
                 timer += 1
-            if timer % 60 < 5 or 10 < timer % 60 < 15:
+            if timer % 60 < 5 or 10 < timer % 60 < 15: # Making timer flicker red every second
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(177,18,38))
             else:
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) 
             screen.blit(timer_text,(450,30))
             maze.draw_mazes(screen,(243,243,243))
             player.draw_player(screen,maze)
+            # All that happens when you finish the maze
             if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.
                 screen.blit(victory_text11,(21,346))
                 screen.blit(victory_text1,(25,350))
