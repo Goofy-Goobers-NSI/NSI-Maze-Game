@@ -122,10 +122,10 @@ while running:
             fake_timer = game_font2.render(f"Time : 0",True,(50,50,50))
             screen.blit(fake_timer,(475,30))
             if first_time_cooldown-current_time <= 1000: # Because '1' is thinner than '2' and '3', we push it to the right to make it look like it didn't move
-                screen.blit(timer_text2,(585,195))
+                screen.blit(timer_text2,(590,195))
                 screen.blit(timer_text,(600,210))
             else:
-                screen.blit(timer_text2,(550,195))
+                screen.blit(timer_text2,(555,195))
                 screen.blit(timer_text,(565,210))
             
         else:
