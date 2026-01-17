@@ -4,7 +4,7 @@ pygame.mixer.init()
 wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
 movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
 # Dictionary to simplify the player movement code
-move_keybinds = {"ARROWS":[pygame.K_UP,pygame.K_RIGHT,pygame.K_DOWN,pygame.K_LEFT],"ZQSD":[pygame.K_z,pygame.K_d,pygame.K_s,pygame.K_q],"WASD":[pygame.K_w,pygame.K_d,pygame.K_s,pygame.K_as]}
+move_keybinds = {"ARROWS":[pygame.K_UP,pygame.K_RIGHT,pygame.K_DOWN,pygame.K_LEFT],"ZQSD":[pygame.K_z,pygame.K_d,pygame.K_s,pygame.K_q],"WASD":[pygame.K_w,pygame.K_d,pygame.K_s,pygame.K_a]}
 
 class Player:
     def __init__(self,x,y):
