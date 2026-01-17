@@ -149,7 +149,6 @@ while running:
                 screen.blit(timer_text,(450,30))   
                 if has_won[0] == False:
                     has_won = [True,True]
-                print(round(timer/60,2))
         pygame.display.flip()
     pygame.display.flip()
     if has_won == [True,True]:
@@ -158,6 +157,7 @@ while running:
     if has_won == [True,False]:
         cooldown -= 1
     if has_won == [True,False] and cooldown <= 0:
+        print(round(timer/60,2))
         game_state = "menu"
 
 
