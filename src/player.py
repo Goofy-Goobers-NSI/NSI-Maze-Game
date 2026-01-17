@@ -1,4 +1,10 @@
 import pygame
+# Sound for movement of the player
+pygame.mixer.init()
+wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
+movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
+# Dictionary to simplify the player movement code
+move_keybinds = {"ARROWS":[pygame.K_UP,pygame.K_RIGHT,pygame.K_DOWN,pygame.K_LEFT],"ZQSD":[pygame.K_z,pygame.K_d,pygame.K_s,pygame.K_q],"WASD":[pygame.K_w,pygame.K_d,pygame.K_s,pygame.K_as]}
 
 class Player:
     def __init__(self,x,y):
@@ -10,6 +16,32 @@ class Player:
         y = maze.offset_y + self.y*maze.cell_size + 10
         pygame.draw.rect(screen,"purple",[x,y,20,20])
         pygame.draw.rect(screen,"black",[x,y,20,20],3)
+
+    def player_movement(self,pressed_key,movement_keys,maze,start_cooldown,current_time,has_won):
+        if pressed_key == move_keybinds[movement_keys][0] and start_cooldown < current_time and has_won[0] == False:
+            if self.check_wall_collisions(0,maze):
+                self.move_player(0)
+                movement_woosh_sound.play()
+            else:
+                wall_hitting_sound.play()
+        elif pressed_key == move_keybinds[movement_keys][1] and start_cooldown < current_time and has_won[0] == False:
+            if self.check_wall_collisions(1,maze):
+                self.move_player(1)
+                movement_woosh_sound.play()
+            else:
+                wall_hitting_sound.play()
+        elif pressed_key == move_keybinds[movement_keys][2] and start_cooldown < current_time and has_won[0] == False:
+            if self.check_wall_collisions(2,maze):
+                self.move_player(2)
+                movement_woosh_sound.play()
+            else:
+                wall_hitting_sound.play()
+        elif pressed_key == move_keybinds[movement_keys][3] and start_cooldown < current_time and has_won[0] == False:
+            if self.check_wall_collisions(3,maze):
+                self.move_player(3)
+                movement_woosh_sound.play()
+            else:
+                wall_hitting_sound.play()
 
     def move_player(self,direction): # direction is equal to 1,2,3 or 4 meaning up,right,down,left
         if direction == 0:

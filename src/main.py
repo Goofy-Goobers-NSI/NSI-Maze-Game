@@ -11,8 +11,9 @@ screen = pygame.display.set_mode((1440,900))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Maze racers")
 running = True
+# Core game variables
+movement_keys = 'WASD' # Is gonna be changable in settings : WASD or ZQSD or ARROWS
 game_state = "menu"
-
 # Timer
 timer = 0
 
@@ -31,9 +32,6 @@ light_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avo
 light_overlay.fill((200,200,200,50))
 dark_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
 dark_overlay.fill((200,200,200,200))
-# Initializing variables for sound
-wall_hitting_sound = pygame.mixer.Sound("assets\sounds\wall_hit_sound.wav")
-movement_woosh_sound = pygame.mixer.Sound("assets\sounds\woosh_movement.wav")
 
 # Initializing variables for text
 game_font = pygame.font.Font("assets\_fonts\Racing.otf",150)
@@ -57,7 +55,6 @@ solution_path = solver.solve()
 
 
 while running:
-    print(timer)
     click = False
     current_time = pygame.time.get_ticks()
     if game_state == "menu":
@@ -66,7 +63,8 @@ while running:
                 running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 click = True
-        has_won = False
+        has_won = [False,False]
+        cooldown = 0
         screen.fill("white")
 
         # Background doing it's thing
@@ -111,30 +109,9 @@ while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_z and first_time_cooldown < current_time:
-                if player.check_wall_collisions(0,maze):
-                    player.move_player(0)
-                    movement_woosh_sound.play()
-                else:
-                    wall_hitting_sound.play()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_d and first_time_cooldown < current_time:
-                if player.check_wall_collisions(1,maze):
-                    player.move_player(1)
-                    movement_woosh_sound.play()
-                else:
-                    wall_hitting_sound.play()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_s and first_time_cooldown < current_time:
-                if player.check_wall_collisions(2,maze):
-                    player.move_player(2)
-                    movement_woosh_sound.play()
-                else:
-                    wall_hitting_sound.play()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_q and first_time_cooldown < current_time:
-                if player.check_wall_collisions(3,maze):
-                    player.move_player(3)
-                    movement_woosh_sound.play()
-                else:
-                    wall_hitting_sound.play()
+            elif event.type == pygame.KEYDOWN:
+                print("hello?",event.key)
+                player.player_movement(event.key,movement_keys,maze,first_time_cooldown,current_time,has_won)
             
         screen.fill("white")
         if first_time_cooldown > current_time:
@@ -154,7 +131,8 @@ while running:
             
         else:
             screen.blit(light_overlay,(0,0))
-            timer += 1
+            if has_won[0] == False:
+                timer += 1
             if timer % 60 < 5 or 10 < timer % 60 < 15:
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(177,18,38))
             else:
@@ -168,14 +146,21 @@ while running:
                 timer_text = game_font2.render(f"Time : {round(timer/60,2)}",True,(220,220,30)) 
                 timer_text2 = game_font2.render(f"Time : {round(timer/60,2)}",True,(50,50,50))
                 screen.blit(timer_text2,(448,28))
-                screen.blit(timer_text,(450,30))                 
-                has_won = True
+                screen.blit(timer_text,(450,30))   
+                if has_won[0] == False:
+                    has_won = [True,True]
                 print(round(timer/60,2))
         pygame.display.flip()
     pygame.display.flip()
-    if has_won:
-            pygame.time.wait(3000)
-            game_state = "menu"
+    if has_won == [True,True]:
+        cooldown = 180
+        has_won[1] = False
+    if has_won == [True,False]:
+        cooldown -= 1
+    if has_won == [True,False] and cooldown <= 0:
+        game_state = "menu"
+
+
     clock.tick(60)
 
 pygame.quit()
