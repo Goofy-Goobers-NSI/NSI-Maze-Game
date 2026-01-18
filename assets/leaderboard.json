@@ -1,17 +1,9 @@
 {
-    "all_times": [
-        2.7,
-        3.57,
-        4.13,
-        4.38,
-        4.42,
-        4.5,
-        4.67,
-        4.8,
-        5.0,
-        5.18
+    "casual": [
+        
     ],
     "time_limit_easy": [],
     "time_limit_medium": [],
-    "time_limit_hard": []
+    "time_limit_hard": [],
+    "time_limit_expert": []
 }

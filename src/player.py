@@ -18,30 +18,31 @@ class Player:
         pygame.draw.rect(screen,"black",[x,y,20,20],3)
 
     def player_movement(self,pressed_key,movement_keys,maze,start_cooldown,current_time,has_won):
-        if pressed_key == move_keybinds[movement_keys][0] and start_cooldown < current_time and has_won[0] == False:
-            if self.check_wall_collisions(0,maze):
-                self.move_player(0)
-                movement_woosh_sound.play()
-            else:
-                wall_hitting_sound.play()
-        elif pressed_key == move_keybinds[movement_keys][1] and start_cooldown < current_time and has_won[0] == False:
-            if self.check_wall_collisions(1,maze):
-                self.move_player(1)
-                movement_woosh_sound.play()
-            else:
-                wall_hitting_sound.play()
-        elif pressed_key == move_keybinds[movement_keys][2] and start_cooldown < current_time and has_won[0] == False:
-            if self.check_wall_collisions(2,maze):
-                self.move_player(2)
-                movement_woosh_sound.play()
-            else:
-                wall_hitting_sound.play()
-        elif pressed_key == move_keybinds[movement_keys][3] and start_cooldown < current_time and has_won[0] == False:
-            if self.check_wall_collisions(3,maze):
-                self.move_player(3)
-                movement_woosh_sound.play()
-            else:
-                wall_hitting_sound.play()
+        if start_cooldown < current_time and has_won[0] == False:
+            if pressed_key == move_keybinds[movement_keys][0]:
+                if self.check_wall_collisions(0,maze):
+                    self.move_player(0)
+                    movement_woosh_sound.play()
+                else:
+                    wall_hitting_sound.play()
+            elif pressed_key == move_keybinds[movement_keys][1]:
+                if self.check_wall_collisions(1,maze):
+                    self.move_player(1)
+                    movement_woosh_sound.play()
+                else:
+                    wall_hitting_sound.play()
+            elif pressed_key == move_keybinds[movement_keys][2]:
+                if self.check_wall_collisions(2,maze):
+                    self.move_player(2)
+                    movement_woosh_sound.play()
+                else:
+                    wall_hitting_sound.play()
+            elif pressed_key == move_keybinds[movement_keys][3]:
+                if self.check_wall_collisions(3,maze):
+                    self.move_player(3)
+                    movement_woosh_sound.play()
+                else:
+                    wall_hitting_sound.play()
 
     def move_player(self,direction): # direction is equal to 1,2,3 or 4 meaning up,right,down,left
         if direction == 0:
