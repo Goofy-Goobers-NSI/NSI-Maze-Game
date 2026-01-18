@@ -100,15 +100,16 @@ def draw_menu(menu_background,current_time,game_title1,game_title11,play_button,
     cat_button.render_button(screen,(69,69,69))
     screen.blit(CAT,(1300,344))
 
-def draw_end_screen(font,menu_button,play_back_button,timer_text):
+def draw_end_screen(font,menu_button,play_back_button,timer_text,has_written_name):
     pygame.draw.rect(screen,(50,50,50),[300,200,800,425])
     pygame.draw.rect(screen,(250,200,135),[300,200,800,425],15)
     victory_text1 = font.render("Congrats, you won !",True,(220,220,30))
     victory_text11 = font.render("Congrats, you won !",True,(240,240,240))
     screen.blit(victory_text11,(318,228))
     screen.blit(victory_text1,(320,230))
-    menu_button.render_button(screen,(50,50,50))
-    play_back_button.render_button(screen,(50,50,50))
+    if has_written_name:
+        menu_button.render_button(screen,(50,50,50))
+        play_back_button.render_button(screen,(50,50,50))
     for i in range(2):
         pygame.draw.rect(screen,(230,230,230),[350+i*400,475,300,100],5)
     menu_button_text = font.render("MENU",True,(230,230,230))
@@ -185,7 +186,7 @@ def check_in_leaderboard(category,time): # Returns True if time is in leaderboar
     if len(leaderboard[category]) < 10:
         return True
     else:
-        return time < leaderboard[category][9]
+        return time < leaderboard[category][9]["time"]
 
 def draw_name_window(font,player_name):
     pygame.draw.rect(screen,(50,50,50),[150,250,1100,275])

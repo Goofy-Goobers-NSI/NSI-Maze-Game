@@ -1,4 +1,4 @@
-import pygame,json,os
+import pygame
 from maze import Maze
 from player import Player
 from solver import Solver
@@ -108,7 +108,7 @@ while running:
         player.draw_player(screen,maze)
         back_to_menu = Button(750,475,300,100)
         play_again = Button(350,475,300,100)
-        draw_end_screen(game_font_S,back_to_menu,play_again,timer_text)
+        draw_end_screen(game_font_S,back_to_menu,play_again,timer_text,has_written_name)
         if check_in_leaderboard(category,round(timer/60,2)) and not(has_written_name): # If player is in leaderboard, ask for his name
             draw_name_window(game_font_XS,player_name)
             if key_pressed:
@@ -120,7 +120,7 @@ while running:
                     player_name = player_name[:-2] + "|"
                 else:
                     player_name = player_name[:-1] + event_key.unicode + "|"
-        if play_again.is_hovered() and click:
+        if play_again.is_hovered() and click and has_written_name:
             game_state = "game"
             maze = Maze(15,15)
             maze.generate_maze()
@@ -131,7 +131,7 @@ while running:
             category = "casual"
             has_written_name = False
 
-        elif back_to_menu.is_hovered() and click:
+        elif back_to_menu.is_hovered() and click and has_written_name:
             game_state = "menu"
     else:
         if key_pressed: # This accounts for movements of the player
