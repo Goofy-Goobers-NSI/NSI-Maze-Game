@@ -1,4 +1,4 @@
-# Ce fichier sera une sorte de librairie de fonctions pour créer le menu principal du jeu
+# Ce fichier sera une sorte de librairie de fonctions pour créer les menus du jeu
 import random
 import pygame
 import os, json
