@@ -15,7 +15,7 @@ running = True
 movement_keys = 'ARROWS' # Is gonna be changable in settings : WASD or ZQSD or ARROWS
 game_state = "menu"
 menu_state = "main"
-player_name = ""
+player_name = "|"
 has_written_name = False
 category = "casual"
 # Timer
@@ -96,7 +96,7 @@ while running:
             timer = 0
             first_time_cooldown = current_time + 3000
             category = "casual"
-            player_name = ""
+            player_name = "|"
             has_written_name = False
 
         if menu_state == "leaderboard":
@@ -113,15 +113,13 @@ while running:
             draw_name_window(game_font_XS,player_name)
             if key_pressed:
                 if key == pygame.K_RETURN:
-                    if len(player_name) == 0 or len(player_name) > 14:
-                        continue
-                    else:
-                        add_time(category,player_name,round(timer/60,2))
+                    if 1 < len(player_name) < 21:
+                        add_time(category,player_name[:-1],round(timer/60,2))
                         has_written_name = True
                 elif key == pygame.K_BACKSPACE:  
-                    player_name = player_name[:-1]
+                    player_name = player_name[:-2] + "|"
                 else:
-                    player_name += event_key.unicode
+                    player_name = player_name[:-1] + event_key.unicode + "|"
         if play_again.is_hovered() and click:
             game_state = "game"
             maze = Maze(15,15)
