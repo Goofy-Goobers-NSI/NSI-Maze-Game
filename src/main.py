@@ -17,6 +17,7 @@ game_state = "menu"
 menu_state = "main"
 player_name = "|"
 has_written_name = False
+render_buttons = True
 category = "casual"
 # Timer
 timer = 0
@@ -108,19 +109,21 @@ while running:
         player.draw_player(screen,maze)
         back_to_menu = Button(750,475,300,100)
         play_again = Button(350,475,300,100)
-        draw_end_screen(game_font_S,back_to_menu,play_again,timer_text,has_written_name)
+        draw_end_screen(game_font_S,back_to_menu,play_again,timer_text,render_buttons)
         if check_in_leaderboard(category,round(timer/60,2)) and not(has_written_name): # If player is in leaderboard, ask for his name
             draw_name_window(game_font_XS,player_name)
+            render_buttons = False
             if key_pressed:
                 if key == pygame.K_RETURN:
                     if 1 < len(player_name) < 21:
                         add_time(category,player_name[:-1],round(timer/60,2))
                         has_written_name = True
+                        render_buttons = True
                 elif key == pygame.K_BACKSPACE:  
                     player_name = player_name[:-2] + "|"
                 else:
                     player_name = player_name[:-1] + event_key.unicode + "|"
-        if play_again.is_hovered() and click and has_written_name:
+        if play_again.is_hovered() and click and render_buttons:
             game_state = "game"
             maze = Maze(15,15)
             maze.generate_maze()
@@ -131,7 +134,7 @@ while running:
             category = "casual"
             has_written_name = False
 
-        elif back_to_menu.is_hovered() and click and has_written_name:
+        elif back_to_menu.is_hovered() and click and render_buttons:
             game_state = "menu"
     else:
         if key_pressed: # This accounts for movements of the player

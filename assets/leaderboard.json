@@ -6,6 +6,10 @@
         },
         {
             "name": "Guillaume",
+            "time": 5.08
+        },
+        {
+            "name": "Guillaume",
             "time": 5.43
         },
         {
@@ -22,6 +26,10 @@
         },
         {
             "name": "Guillaume",
+            "time": 7.05
+        },
+        {
+            "name": "Guillaume",
             "time": 8.28
         },
         {
@@ -31,14 +39,6 @@
         {
             "name": "Guillaume",
             "time": 10.03
-        },
-        {
-            "name": "Guillaume",
-            "time": 11.17
-        },
-        {
-            "name": "Guillaume",
-            "time": 13.33
         }
     ],
     "time_limit_easy": [],
