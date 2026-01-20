@@ -1,5 +1,4 @@
 import pygame
-import random
 from maze import N, E, S, W, DX, DY, OPPOSITE
 
 class Smartypants:
@@ -21,9 +20,9 @@ class Smartypants:
         
         self.last_move_time = current_time
 
-        self.follow_solution_path(current_time)
+        self.follow_solution_path()
 
-    def follow_solution_path(self, current_time):
+    def follow_solution_path(self):
         if self.current_i >= len(self.solution_path) - 1:
             self.current_cell = self.solution_path[-1]
             return None
