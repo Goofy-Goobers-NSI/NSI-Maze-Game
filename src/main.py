@@ -15,6 +15,7 @@ running = True
 movement_keys = 'ARROWS' # Is gonna be changable in settings : WASD or ZQSD or ARROWS
 game_state = "menu"
 menu_state = "main"
+maze_type = "solo"
 player_name = "|"
 has_written_name = False
 render_buttons = True
@@ -95,7 +96,7 @@ while running:
             player.x = maze.start.x
             player.y = maze.start.y
             timer = 0
-            first_time_cooldown = current_time + 3000
+            first_time_cooldown = current_time + 5000
             category = "casual"
             player_name = "|"
             has_written_name = False
@@ -105,7 +106,7 @@ while running:
     elif game_state == "finished":
         screen.fill("white")
         screen.blit(dark_overlay,(0,0))
-        maze.draw_mazes(screen,(210,210,210))
+        maze.draw_mazes(screen,(210,210,210),maze_type)
         player.draw_player(screen,maze)
         back_to_menu = Button(750,475,300,100)
         play_again = Button(350,475,300,100)
@@ -130,7 +131,7 @@ while running:
             player.x = maze.start.x
             player.y = maze.start.y
             timer = 0
-            first_time_cooldown = current_time + 3000
+            first_time_cooldown = current_time + 5000
             category = "casual"
             has_written_name = False
 
@@ -143,19 +144,21 @@ while running:
         screen.fill("white")
         if first_time_cooldown > current_time: # What happens during the 3,2,1 countdown
             screen.blit(dark_overlay,(0,0))
-            maze.draw_mazes(screen,(210,210,210))
+            maze.draw_mazes(screen,(210,210,210),maze_type)
             player.draw_player(screen,maze)
-            timer_text = game_font_XL.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(215,210,15))
-            timer_text2 = game_font_XXL.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(0,0,0))
-            fake_timer = game_font_M.render(f"Time : 0",True,(50,50,50))
-            screen.blit(fake_timer,(475,30))
+            timer_text = game_font_L.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(215,210,15))
+            timer_text2 = game_font_L.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(0,0,0))
             if first_time_cooldown-current_time <= 1000: # Because '1' is thinner than '2' and '3', we push it to the right to make it look like it didn't move
-                screen.blit(timer_text2,(590,195))
-                screen.blit(timer_text,(600,210))
+                screen.blit(timer_text2,(670,-10))
+                screen.blit(timer_text,(680,-5))
+            elif first_time_cooldown-current_time <= 3000:
+                screen.blit(timer_text2,(670,-10))
+                screen.blit(timer_text,(680,-5))
             else:
+                timer_text = game_font_XL.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(215,210,15))
+                timer_text2 = game_font_XXL.render(f"{(first_time_cooldown-current_time)//1000 + 1}",True,(0,0,0))
                 screen.blit(timer_text2,(555,195))
-                screen.blit(timer_text,(565,210))
-                
+                screen.blit(timer_text,(565,210))    
         else:
             screen.blit(light_overlay,(0,0))
             if has_won[0] == False:
@@ -165,7 +168,7 @@ while running:
             else:
                 timer_text = game_font_M.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) 
             screen.blit(timer_text,(450,30))
-            maze.draw_mazes(screen,(243,243,243))
+            maze.draw_mazes(screen,(243,243,243),maze_type)
             player.draw_player(screen,maze)
             # All that happens when you finish the maze
             if player.check_victoire(maze): # When you reach the end, cool 3D text goes brr.

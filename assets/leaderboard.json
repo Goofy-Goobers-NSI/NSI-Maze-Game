@@ -1,44 +1,44 @@
 {
     "casual": [
         {
+            "name": "ynot",
+            "time": 2.69
+        },
+        {
+            "name": "Guillaume",
+            "time": 2.7
+        },
+        {
+            "name": "Guillaume",
+            "time": 3.02
+        },
+        {
+            "name": "ynot",
+            "time": 3.27
+        },
+        {
+            "name": "ynt",
+            "time": 3.4
+        },
+        {
             "name": "Guillaume",
             "time": 3.43
         },
         {
-            "name": "tony",
-            "time": 4.07
-        },
-        {
-            "name": "ynot",
-            "time": 4.85
+            "name": "Guillaume",
+            "time": 3.6
         },
         {
             "name": "Guillaume",
-            "time": 4.88
+            "time": 3.67
         },
         {
             "name": "Guillaume",
-            "time": 4.92
-        },
-        {
-            "name": "ynot",
-            "time": 5.1
+            "time": 3.93
         },
         {
             "name": "Guillaume",
-            "time": 5.43
-        },
-        {
-            "name": "Guillaume",
-            "time": 5.45
-        },
-        {
-            "name": "Guillaume",
-            "time": 5.73
-        },
-        {
-            "name": "Guillaume",
-            "time": 6.33
+            "time": 3.98
         }
     ],
     "time_limit_easy": [],

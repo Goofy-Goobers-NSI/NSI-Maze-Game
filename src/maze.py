@@ -63,9 +63,14 @@ class Maze:
         else:
             cell.remove_walls([0,1])
 
-    def draw_mazes(self,screen,wall_color):
-        Maze.draw_maze(self,screen,wall_color)
-        Maze.draw_second_maze(self,screen,wall_color)
+    def draw_mazes(self,screen,wall_color,maze_type):
+        if maze_type == "solo":
+            self.offset_x = 420
+            Maze.draw_maze(self,screen,wall_color)
+        elif maze_type == "versus":
+            self.offset_x = 80
+            Maze.draw_maze(self,screen,wall_color)
+            Maze.draw_second_maze(self,screen,wall_color)
 
     def draw_maze(self, screen,wall_color):
         # Draw the first maze grid and highlight start/end
