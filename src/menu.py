@@ -16,6 +16,8 @@ CAT = pygame.image.load("assets\images\cat.png").convert_alpha()
 CAT = pygame.transform.scale(CAT,(110,82))
 cross_image = pygame.image.load("assets\images\cross.png").convert_alpha()
 cross_image = pygame.transform.scale(cross_image,(100,100))
+return_arrow = pygame.image.load("assets\images\_return_arrow.png")
+return_arrow = pygame.transform.scale(return_arrow,(90,76))
 light_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
 light_overlay.fill((200,200,200,50))
 dark_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
@@ -53,8 +55,6 @@ class Background:
         else:
             self.x += self.x_movement * self.speed
             self.y += self.y_movement * self.speed
-        # Actually rendering the image
-        screen.blit(self.image,(self.x,self.y))
 
 class Button:
     def __init__(self,x,y,width,height):
@@ -78,6 +78,7 @@ def draw_menu(menu_background,current_time,game_title1,game_title11,play_button,
 
     # Background doing it's thing
     menu_background.move_background(screen,current_time)
+    screen.blit(menu_background.image,(menu_background.x,menu_background.y))
     screen.blit(light_overlay,(0,0))
 
     # Logo
@@ -189,7 +190,6 @@ def check_in_leaderboard(category,time): # Returns True if time is in leaderboar
         return time < leaderboard[category][9]["time"]
 
 def draw_name_window(font,player_name):
-    pygame.draw.rect(screen,(50,50,50),[150,250,1100,275])
     pygame.draw.rect(screen,(250,200,135),[150,250,1100,275],15)
     congratulating_text = font.render("Wow ! You made it to leaderboards !",True,(230,230,230))
     name_text = font.render("Give us your name :",True,(230,230,230))
@@ -202,3 +202,39 @@ def draw_name_window(font,player_name):
     pygame.draw.rect(screen,(230,230,230),[600,380,600,100],3)
     player_name_text = font.render(player_name,True,(230,230,230))
     screen.blit(player_name_text,(620,400))
+
+def draw_play_solo_duo(small_font,big_font,solo_button,versus_button,return_button,game_title1,game_title11,menu_background,current_time):
+    screen.fill("white")
+    screen.blit(menu_background.image,(menu_background.x,menu_background.y))
+    # Logo
+    pygame.draw.rect(screen,(250,200,135),[375,25,650,350])
+    pygame.draw.rect(screen,(43,43,43),[375,25,650,350],7)
+    screen.blit(game_title1,(475,65))
+    screen.blit(game_title11,(400,185))
+    solo_button.render_button(screen,(50,50,50))
+    versus_button.render_button(screen,(50,50,50))
+    return_button.render_button(screen,(50,50,50))
+    screen.blit(return_arrow,(30,35))
+    for i in range(2):
+        pygame.draw.rect(screen,(250,200,135),[205 + i*590,400,450,450],15)
+    solo_text_title = big_font.render("Solo", True,(230,230,230))
+    solo_text_explanation1 = small_font.render("Single-player",True,(120, 200, 210))
+    solo_text_explanation2 = small_font.render("gamemodes !",True,(120, 200, 210))
+    solo_text_explanation3 = small_font.render("Solve a maze as",True,(120, 200, 210))
+    solo_text_explanation4 = small_font.render("fast as you can !",True,(120, 200, 210))
+    screen.blit(solo_text_title,(340,425))
+    screen.blit(solo_text_explanation1,(250,550))
+    screen.blit(solo_text_explanation2,(350,585))
+    screen.blit(solo_text_explanation3,(250,650))
+    screen.blit(solo_text_explanation4,(285,685))
+    versus_text_title = big_font.render("Versus", True,(230,230,230))
+    versus_text_explanation1 = small_font.render("Versus ",True,(120, 200, 210))
+    versus_text_explanation2 = small_font.render("gamemodes ! ",True,(120, 200, 210))
+    versus_text_explanation3 = small_font.render("Race an evil robot,",True,(120, 200, 210))
+    versus_text_explanation4 = small_font.render("or your friend !",True,(120, 200, 210))
+    screen.blit(versus_text_explanation1,(825,550))
+    screen.blit(versus_text_explanation2,(925,585))
+    screen.blit(versus_text_explanation3,(825,685))
+    screen.blit(versus_text_explanation4,(900,720))
+    screen.blit(versus_text_title,(880,425))
+    

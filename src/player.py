@@ -17,8 +17,8 @@ class Player:
         pygame.draw.rect(screen,"purple",[x,y,20,20])
         pygame.draw.rect(screen,"black",[x,y,20,20],3)
 
-    def player_movement(self,pressed_key,movement_keys,maze,start_cooldown,current_time,has_won):
-        if start_cooldown < current_time and has_won[0] == False:
+    def player_movement(self,pressed_key,movement_keys,maze,timer):
+        if timer > 0:
             if pressed_key == move_keybinds[movement_keys][0]:
                 if self.check_wall_collisions(0,maze):
                     self.move_player(0)
