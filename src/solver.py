@@ -14,9 +14,10 @@ class Solver:
         d = depth for mistakes
         gap = minimum steps between mistakes (cooldown essentially between mistakes)
         '''
+        
         configs = {
             "easy":   {"m": (6, 8), "d": (5, 9), "gap": 5},
-            "normal": {"m": (6, 10), "d": (3, 6), "gap": 5},
+            "normal": {"m": (3, 5), "d": (3, 5), "gap": 12},
             "hard":   {"m": (0, 3), "d": (1, 5), "gap": 25}
         }
         

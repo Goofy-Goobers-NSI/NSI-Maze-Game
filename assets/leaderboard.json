@@ -1,0 +1,48 @@
+{
+    "casual": [
+        {
+            "name": "ynot",
+            "time": 2.69
+        },
+        {
+            "name": "Guillaume",
+            "time": 2.7
+        },
+        {
+            "name": "ynot",
+            "time": 2.88
+        },
+        {
+            "name": "Guillaume",
+            "time": 3.02
+        },
+        {
+            "name": "Guillaume",
+            "time": 3.07
+        },
+        {
+            "name": "ynot",
+            "time": 3.07
+        },
+        {
+            "name": "Guillaume",
+            "time": 3.08
+        },
+        {
+            "name": "Guillaume",
+            "time": 3.17
+        },
+        {
+            "name": "Guillaume",
+            "time": 3.22
+        },
+        {
+            "name": "ynot",
+            "time": 3.25
+        }
+    ],
+    "time_limit_easy": [],
+    "time_limit_medium": [],
+    "time_limit_hard": [],
+    "time_limit_expert": []
+}

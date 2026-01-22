@@ -30,14 +30,14 @@ class Smartypants:
         self.current_i += 1
         self.current_cell = self.solution_path[self.current_i]
 
-    def draw(self, screen, offset_x, offset_y):
+    def draw(self, screen,maze):
         if not self.current_cell:
             return
         
         cell_size = self.maze.cell_size
         
-        center_x = offset_x + self.current_cell.x * cell_size + cell_size // 2
-        center_y = offset_y + self.current_cell.y * cell_size + cell_size // 2
+        center_x = maze.second_maze_offset_x + self.current_cell.x * cell_size + cell_size // 2
+        center_y = maze.second_maze_offset_y + self.current_cell.y * cell_size + cell_size // 2
         
         # Blue normally
         color = (100, 100, 255)
@@ -45,15 +45,11 @@ class Smartypants:
         
         pygame.draw.circle(screen, color, (center_x, center_y), radius)
         pygame.draw.circle(screen, (255, 255, 255), (center_x, center_y), radius, 2)
-        
-        # Draw arrow to next cell in solution path
-        if self.current_i < len(self.solution_path) - 1:
-            next_cell = self.solution_path[self.current_i + 1]
-            next_x = offset_x + next_cell.x * cell_size + cell_size // 2
-            next_y = offset_y + next_cell.y * cell_size + cell_size // 2
-            pygame.draw.line(screen, (255, 255, 0), (center_x, center_y), (next_x, next_y), 2)
     
     def is_finished(self):
         if not self.solution_path:
             return False
         return self.current_i >= len(self.solution_path) - 1
+    
+    def smarty_win(self,maze):
+        return self.current_cell.x == maze.end.x and self.current_cell.y == maze.end.y
