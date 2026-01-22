@@ -45,13 +45,6 @@ class Smartypants:
         
         pygame.draw.circle(screen, color, (center_x, center_y), radius)
         pygame.draw.circle(screen, (255, 255, 255), (center_x, center_y), radius, 2)
-        
-        # Draw arrow to next cell in solution path
-        if self.current_i < len(self.solution_path) - 1:
-            next_cell = self.solution_path[self.current_i + 1]
-            next_x = maze.second_maze_offset_x + next_cell.x * cell_size + cell_size // 2
-            next_y = maze.second_maze_offset_y + next_cell.y * cell_size + cell_size // 2
-            pygame.draw.line(screen, (255, 255, 0), (center_x, center_y), (next_x, next_y), 2)
     
     def is_finished(self):
         if not self.solution_path:

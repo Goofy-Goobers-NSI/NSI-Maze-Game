@@ -107,8 +107,9 @@ def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons,
     if who_won == "player":
         victory_text1 = font.render("Congrats, you won !",True,(220,220,30))
         victory_text11 = font.render("Congrats, you won !",True,(240,240,240))
-        screen.blit(victory_text11,(368,208))
-        screen.blit(victory_text1,(370,210))
+        screen.blit(victory_text11,(318,218))
+        screen.blit(victory_text1,(320,220))
+        screen.blit(timer_text,(415,325))
     else:
         victory_text1 = font.render("AI will overtake us",True,(220,220,30))
         victory_text11 = font.render("AI will overtake us",True,(240,240,240))
@@ -116,8 +117,9 @@ def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons,
         victory_text21 = font.render("Loser !",True,(240,240,240))
         screen.blit(victory_text11,(348,208))
         screen.blit(victory_text1,(350,210))
-        screen.blit(victory_text21,(598,268))
-        screen.blit(victory_text2,(600,270))
+        screen.blit(victory_text21,(568,288))
+        screen.blit(victory_text2,(570,290))
+        screen.blit(timer_text,(415,360))
     
     if render_buttons:
         menu_button.render_button(screen,(50,50,50))
@@ -128,7 +130,6 @@ def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons,
     play_button_text = font.render("PLAY",True,(230,230,230))
     screen.blit(menu_button_text,(790,475))
     screen.blit(play_button_text,(400,475))
-    screen.blit(timer_text,(425,340))
 
 # Functions for the leaderboard 
 def draw_leaderboard(small_font,big_font,category,fastest_time,endurance_e,endurance_m,endurance_h,endurance_ex,close_button):
