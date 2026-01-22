@@ -101,13 +101,24 @@ def draw_menu(menu_background,current_time,game_title1,game_title11,play_button,
     cat_button.render_button(screen,(69,69,69))
     screen.blit(CAT,(1300,344))
 
-def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons):
+def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons,who_won):
     pygame.draw.rect(screen,(50,50,50),[300,200,800,425])
     pygame.draw.rect(screen,(250,200,135),[300,200,800,425],15)
-    victory_text1 = font.render("Congrats, you won !",True,(220,220,30))
-    victory_text11 = font.render("Congrats, you won !",True,(240,240,240))
-    screen.blit(victory_text11,(318,228))
-    screen.blit(victory_text1,(320,230))
+    if who_won == "player":
+        victory_text1 = font.render("Congrats, you won !",True,(220,220,30))
+        victory_text11 = font.render("Congrats, you won !",True,(240,240,240))
+        screen.blit(victory_text11,(368,208))
+        screen.blit(victory_text1,(370,210))
+    else:
+        victory_text1 = font.render("AI will overtake us",True,(220,220,30))
+        victory_text11 = font.render("AI will overtake us",True,(240,240,240))
+        victory_text2 = font.render("Loser !",True,(200, 60, 60))
+        victory_text21 = font.render("Loser !",True,(240,240,240))
+        screen.blit(victory_text11,(348,208))
+        screen.blit(victory_text1,(350,210))
+        screen.blit(victory_text21,(598,268))
+        screen.blit(victory_text2,(600,270))
+    
     if render_buttons:
         menu_button.render_button(screen,(50,50,50))
         play_back_button.render_button(screen,(50,50,50))
