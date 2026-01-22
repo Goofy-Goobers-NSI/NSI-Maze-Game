@@ -10,7 +10,7 @@ leaderboard_file = "leaderboard.json"
 # Pygame setup
 pygame.init()
 pygame.mixer.init()
-screen = pygame.display.set_mode((1440,900))
+screen = pygame.display.set_mode((1440, 900))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Maze racers")
 running = True

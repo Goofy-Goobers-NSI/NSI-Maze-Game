@@ -3,7 +3,7 @@ import random
 from maze import N, E, S, W, DX, DY
 
 class Solver:
-    def __init__(self, maze, difficulty="hard"):
+    def __init__(self, maze, difficulty="normal"):
         self.maze = maze
         self.solution_path = []
         self.visited = set()
