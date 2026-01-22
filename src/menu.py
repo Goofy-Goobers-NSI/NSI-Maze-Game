@@ -12,8 +12,6 @@ settings_image = pygame.image.load("assets\images\cog.png").convert_alpha()
 settings_image = pygame.transform.scale(settings_image,(130,130))
 leaderboard_image = pygame.image.load("assets\images\_trophy.png").convert_alpha()
 leaderboard_image = pygame.transform.scale(leaderboard_image,(110,95))
-CAT = pygame.image.load("assets\images\cat.png").convert_alpha()
-CAT = pygame.transform.scale(CAT,(110,82))
 cross_image = pygame.image.load("assets\images\cross.png").convert_alpha()
 cross_image = pygame.transform.scale(cross_image,(100,100))
 return_arrow = pygame.image.load("assets\images\_return_arrow.png")
@@ -22,6 +20,9 @@ light_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avo
 light_overlay.fill((200,200,200,50))
 dark_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
 dark_overlay.fill((200,200,200,200))
+# Cat images
+CAT = pygame.image.load("assets\images\cat.png").convert_alpha()
+CAT = pygame.transform.scale(CAT,(110,82))
 # Text
 
 
