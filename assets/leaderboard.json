@@ -9,6 +9,10 @@
             "time": 2.7
         },
         {
+            "name": "ynot",
+            "time": 2.88
+        },
+        {
             "name": "Guillaume",
             "time": 3.02
         },
@@ -17,28 +21,24 @@
             "time": 3.07
         },
         {
+            "name": "ynot",
+            "time": 3.07
+        },
+        {
+            "name": "Guillaume",
+            "time": 3.08
+        },
+        {
             "name": "Guillaume",
             "time": 3.17
         },
         {
+            "name": "Guillaume",
+            "time": 3.22
+        },
+        {
             "name": "ynot",
-            "time": 3.27
-        },
-        {
-            "name": "ynt",
-            "time": 3.4
-        },
-        {
-            "name": "Guillaume",
-            "time": 3.43
-        },
-        {
-            "name": "Guillaume",
-            "time": 3.58
-        },
-        {
-            "name": "Guillaume",
-            "time": 3.6
+            "time": 3.25
         }
     ],
     "time_limit_easy": [],

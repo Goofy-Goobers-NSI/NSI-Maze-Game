@@ -202,6 +202,7 @@ def check_in_leaderboard(category,time): # Returns True if time is in leaderboar
         return time < leaderboard[category][9]["time"]
 
 def draw_name_window(font,player_name):
+    pygame.draw.rect(screen,(50,50,50),[150,250,1100,275])
     pygame.draw.rect(screen,(250,200,135),[150,250,1100,275],15)
     congratulating_text = font.render("Wow ! You made it to leaderboards !",True,(230,230,230))
     name_text = font.render("Give us your name :",True,(230,230,230))

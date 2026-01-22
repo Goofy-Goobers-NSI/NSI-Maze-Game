@@ -16,7 +16,7 @@ pygame.display.set_caption("Maze racers")
 running = True
 
 # Core game variables
-movement_keys = 'ARROWS' # Is gonna be changable in settings : WASD or ZQSD or ARROWS
+movement_keys = 'ZQSD' # Is gonna be changable in settings : WASD or ZQSD or ARROWS
 game_state = "menu"
 menu_state = "main"
 maze_type = "solo"
