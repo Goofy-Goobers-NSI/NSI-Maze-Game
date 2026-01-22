@@ -159,7 +159,8 @@ while running:
         screen.blit(dark_overlay,(0,0))
         maze.draw_mazes(screen,(210,210,210),maze_type)
         player.draw_player(screen,maze)
-        smarty.draw(screen,maze)
+        if gamemode == "versus_ai":
+            smarty.draw(screen,maze)
         draw_end_screen(game_font_S,back_to_menu,play_again,timer_text,render_buttons,who_won)
 
         if check_in_leaderboard(category,round(timer/60,2)) and not(has_written_name) and who_won == "player": # If player is in leaderboard, ask for his name
@@ -204,7 +205,8 @@ while running:
             screen.blit(dark_overlay,(0,0))
             maze.draw_mazes(screen,(210,210,210),maze_type)
             player.draw_player(screen,maze)
-            smarty.draw(screen,maze)
+            if gamemode == "versus_ai":
+                smarty.draw(screen,maze)
             timer_text = game_font_L.render(f"{(remaining_time)//60 + 1}",True,(215,210,15))
             timer_text2 = game_font_L.render(f"{(remaining_time)//60 + 1}",True,(0,0,0))
 
