@@ -1,6 +1,10 @@
 {
     "casual": [
         {
+            "name": "Kaspian",
+            "time": 2.48
+        },
+        {
             "name": "ynot",
             "time": 2.69
         },
@@ -35,10 +39,6 @@
         {
             "name": "Guillaume",
             "time": 3.22
-        },
-        {
-            "name": "ynot",
-            "time": 3.25
         }
     ],
     "time_limit_easy": [],

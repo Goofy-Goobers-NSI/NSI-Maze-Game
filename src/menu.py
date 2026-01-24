@@ -251,4 +251,30 @@ def draw_play_solo_duo(small_font,big_font,solo_button,versus_button,return_butt
     screen.blit(versus_text_explanation3,(825,685))
     screen.blit(versus_text_explanation4,(900,720))
     screen.blit(versus_text_title,(880,425))
-    
+
+def draw_cat_menu(small_font, return_button, menu_background, cat_catalog):
+
+    screen.blit(menu_background.image, (menu_background.x, menu_background.y))
+    screen.blit(dark_overlay, (0, 0))
+    cat_title = small_font.render("THE CAT GALLERY", True, (250, 200, 135))
+    title_rect = cat_title.get_rect(center=(720, 80))
+    pygame.draw.rect(screen, (50, 50, 50), title_rect.inflate(20, 10))
+    pygame.draw.rect(screen, (250, 200, 135), title_rect.inflate(20, 10), 3)
+    screen.blit(cat_title, title_rect)
+    return_button.render_button(screen, (50, 50, 50))
+    screen.blit(return_arrow, (30, 35))
+
+    for i in range(4):
+        for j in range(2):
+            index = i + j * 4
+            if index >= len(cat_catalog): break
+            frame_x = 100 + i * 320
+            frame_y = 180 + j * 320
+            pygame.draw.rect(screen, (250, 200, 135), [frame_x, frame_y, 250, 250], 10)
+            screen.blit(cat_catalog[index], (frame_x + 20, frame_y + 20))
+
+    caption = small_font.render(":3 Meow :3", True, (255, 192, 203))
+    caption_rect = caption.get_rect(center=(720, 820))
+    pygame.draw.rect(screen, (50, 50, 50), caption_rect.inflate(20, 10))
+    pygame.draw.rect(screen, (255, 192, 203), caption_rect.inflate(20, 10), 2)
+    screen.blit(caption, caption_rect)

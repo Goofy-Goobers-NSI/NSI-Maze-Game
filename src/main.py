@@ -3,20 +3,20 @@ from maze import Maze
 from player import Player
 from solver import Solver
 from smarty_pants import Smartypants
-from menu import Background,Button,play_button_image,add_time,draw_menu,draw_leaderboard,draw_end_screen,check_in_leaderboard,draw_name_window,draw_play_solo_duo
+from menu import Background,Button,play_button_image,add_time,draw_menu,draw_leaderboard,draw_end_screen,check_in_leaderboard,draw_name_window,draw_play_solo_duo,draw_cat_menu
 
 leaderboard_file = "leaderboard.json"
 
 # Pygame setup
 pygame.init()
 pygame.mixer.init()
-screen = pygame.display.set_mode((1440, 900))
+screen = pygame.display.set_mode((1440,900))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Maze racers")
 running = True
 
 # Core game variables
-movement_keys = 'ZQSD' # Is gonna be changable in settings : WASD or ZQSD or ARROWS
+movement_keys = 'ARROWS' # Is gonna be changable in settings : WASD or ZQSD or ARROWS
 game_state = "menu"
 menu_state = "main"
 maze_type = "solo"
@@ -86,6 +86,17 @@ solution_path = solver.solve()
 # AI Racer
 smarty = Smartypants(maze, solver)
 
+# Cats Menu
+cat_folder = "assets/images/cats"
+cat_catalog = []
+
+for i in range(1, 9):
+    file_base = f"{cat_folder}/cat{i}"
+    ext = ".png"
+    surf = pygame.image.load(f"{file_base}{ext}").convert_alpha()
+    surf = pygame.transform.scale(surf, (210, 210))
+    cat_catalog.append(surf)
+
 while running:
     click = False
     key_pressed = False
@@ -100,163 +111,142 @@ while running:
             event_key = event
 
     if game_state == "menu":
-        cooldown = 0
-        draw_menu(menu_background,pygame.time.get_ticks(),game_title1,game_title11,play_button,settings_button,leaderboard_button,cat_button)
+        draw_menu(menu_background, pygame.time.get_ticks(), game_title1, game_title11, play_button, settings_button, leaderboard_button, cat_button)
         
-        if menu_state == "leaderboard":
-            draw_leaderboard(game_font_XXXS,game_font_XXS,category,fastest_time,endurance_easy,endurance_medium,endurance_hard,endurance_expert,close_button)
-
+        if menu_state == "cats":
+            draw_cat_menu(game_font_XS, return_button, menu_background, cat_catalog)
+            if click and return_button.is_hovered():
+                menu_state = "main"
+        elif menu_state == "leaderboard":
+            draw_leaderboard(game_font_XXXS, game_font_XXS, category, fastest_time, endurance_easy, endurance_medium, endurance_hard, endurance_expert, close_button)
+            if click and close_button.is_hovered():
+                menu_state = "main"
         elif menu_state == "gamemode_soloduo":
-            draw_play_solo_duo(game_font_XXS,game_font_S,solo_button,duo_button,return_button,game_title1,game_title11,menu_background,pygame.time.get_ticks())
+            draw_play_solo_duo(game_font_XXS, game_font_S, solo_button, duo_button, return_button, game_title1, game_title11, menu_background, pygame.time.get_ticks())
+            if click:
+                if return_button.is_hovered():
+                    menu_state = "main"
+                elif solo_button.is_hovered():
+                    game_state = "game"
+                    gamemode = "time_trial"
+                    maze_type = "solo"
+                    maze = Maze(15, 15)
+                    maze.generate_maze()
+                    player.x, player.y = maze.start.x, maze.start.y
+                    timer = -300
+                    player_name = "|"
+                    has_written_name = False
+                elif duo_button.is_hovered():
+                    game_state = "game"
+                    gamemode = "versus_ai"
+                    maze_type = "versus"
+                    maze = Maze(15, 15)
+                    maze.generate_maze()
+                    solver = Solver(maze)
+                    solution_path = solver.solve()
+                    smarty = Smartypants(maze, solver)
+                    player.x, player.y = maze.start.x, maze.start.y
+                    timer = -300
+                    category = "casual"
+                    player_name = "|"
+                    has_written_name = False
+        elif menu_state == "main" or menu_state is None:
+            if click:
+                if play_button.is_hovered():
+                    menu_state = "gamemode_soloduo"
+                elif leaderboard_button.is_hovered():
+                    menu_state = "leaderboard"
+                elif cat_button.is_hovered():
+                    menu_state = "cats"
 
-            if solo_button.is_hovered() and click:
-                game_state = "game"
-                gamemode = "time_trial"
-                maze = Maze(15,15)
-                maze.generate_maze()
-                player.x = maze.start.x
-                player.y = maze.start.y
-                timer = -300 # Starts at '-5 seconds' for the cooldown
-                player_name = "|"
-                has_written_name = False
-                maze_type = "solo"
-
-            elif duo_button.is_hovered() and click:
-                game_state = "game"
-                gamemode = "versus_ai"
-                maze = Maze(15,15)
-                maze.generate_maze()
-                solver = Solver(maze)
-                solution_path = solver.solve()
-                smarty = Smartypants(maze, solver)
-                player.x = maze.start.x
-                player.y = maze.start.y
-                
-
-                timer = -300 # Starts at '-5 seconds' for the cooldown
-                category = "casual"
-                player_name = "|"
-                has_written_name = False
-                maze_type = "versus"
-
-            elif return_button.is_hovered() and click:
-                menu_state = None
-
-        if leaderboard_button.is_hovered() and click:
-            if menu_state == "leaderboard":
-                menu_state = None
-            else:
-                menu_state = "leaderboard"
-
-        if close_button.is_hovered() and click:
-            menu_state = None
-
-        if play_button.is_hovered() and click: #  Could be simplified but there are technical issues when I do
-            menu_state = "gamemode_soloduo"
-    
     elif game_state == "finished":
         screen.fill("white")
-        screen.blit(dark_overlay,(0,0))
-        maze.draw_mazes(screen,(210,210,210),maze_type)
-        player.draw_player(screen,maze)
+        screen.blit(dark_overlay, (0, 0))
+        maze.draw_mazes(screen, (210, 210, 210), maze_type)
+        player.draw_player(screen, maze)
         if gamemode == "versus_ai":
-            smarty.draw(screen,maze)
-        draw_end_screen(game_font_S,back_to_menu,play_again,timer_text,render_buttons,who_won)
+            smarty.draw(screen, maze)
+        
+        # Create the final time text surface for the end screen
+        final_time_val = round(timer/60, 2)
+        display_timer_text = game_font_M.render(f"Time : {final_time_val}", True, (220, 220, 30))
+        
+        draw_end_screen(game_font_S, back_to_menu, play_again, display_timer_text, render_buttons, who_won)
 
-        if check_in_leaderboard(category,round(timer/60,2)) and not(has_written_name) and who_won == "player": # If player is in leaderboard, ask for his name
-            draw_name_window(game_font_XS,player_name)
+        if check_in_leaderboard(category, final_time_val) and not has_written_name and who_won == "player":
+            draw_name_window(game_font_XS, player_name)
             render_buttons = False
             if key_pressed:
                 if key == pygame.K_RETURN:
                     if 1 < len(player_name) < 21:
-                        add_time(category,player_name[:-1],round(timer/60,2))
-                        has_written_name = True
-                        render_buttons = True
+                        add_time(category, player_name[:-1], final_time_val)
+                        has_written_name, render_buttons = True, True
                 elif key == pygame.K_BACKSPACE:  
                     player_name = player_name[:-2] + "|"
                 else:
                     player_name = player_name[:-1] + event_key.unicode + "|"
 
+        if click and render_buttons:
+            if play_again.is_hovered():
+                game_state, timer, has_written_name = "game", -300, False
+                maze = Maze(15, 15)
+                maze.generate_maze()
+                player.x, player.y = maze.start.x, maze.start.y
+                if gamemode == "versus_ai":
+                    solver = Solver(maze)
+                    solution_path = solver.solve()
+                    smarty = Smartypants(maze, solver)
+            elif back_to_menu.is_hovered():
+                game_state, menu_state = "menu", "main"
 
-        if play_again.is_hovered() and click and render_buttons:
-            game_state = "game"
-            maze = Maze(15,15)
-            maze.generate_maze()
-            player.x = maze.start.x
-            player.y = maze.start.y
-            solver = Solver(maze)
-            solution_path = solver.solve()
-            smarty = Smartypants(maze, solver)
-            timer = -300
-            category = "casual"
-            has_written_name = False
-
-        elif back_to_menu.is_hovered() and click and render_buttons:
-            game_state = "menu"
-            menu_state = None
     else:
         timer += 1
-        if key_pressed: # This accounts for movements of the player
-            player.player_movement(key,movement_keys,maze,timer)
+        if key_pressed:
+            player.player_movement(key, movement_keys, maze, timer)
                 
         screen.fill("white")
-        if timer <= 0: # What happens during the 5,4,3,2,1 countdown
+        if timer <= 0:
             remaining_time = -timer
-            screen.blit(dark_overlay,(0,0))
-            maze.draw_mazes(screen,(210,210,210),maze_type)
-            player.draw_player(screen,maze)
+            screen.blit(dark_overlay, (0, 0))
+            maze.draw_mazes(screen, (210, 210, 210), maze_type)
+            player.draw_player(screen, maze)
             if gamemode == "versus_ai":
-                smarty.draw(screen,maze)
-            timer_text = game_font_L.render(f"{(remaining_time)//60 + 1}",True,(215,210,15))
-            timer_text2 = game_font_L.render(f"{(remaining_time)//60 + 1}",True,(0,0,0))
+                smarty.draw(screen, maze)
+            
+            count_val = (remaining_time // 60) + 1
+            timer_text_surf = game_font_L.render(f"{count_val}", True, (215, 210, 15))
+            timer_shadow = game_font_L.render(f"{count_val}", True, (0, 0, 0))
 
             if remaining_time == 0:
-                if random.random() < 0.95:
-                    go_sound.play()
-                else:
-                    secret_go_sound.play()
+                go_sound.play() if random.random() < 0.95 else secret_go_sound.play()
 
             if remaining_time <= 180:
-                screen.blit(timer_text2,(655,-10))
-                screen.blit(timer_text,(660,-5))
-                if (remaining_time % 60) == 0 and remaining_time > 0: # Because '1' is thinner than '2' and '3', we push it to the right to make it look like it didn't move
+                screen.blit(timer_shadow, (655, -10))
+                screen.blit(timer_text_surf, (660, -5))
+                if (remaining_time % 60) == 0 and remaining_time > 0:
                     countdown_sound.play()
-
             else:
-                timer_text = game_font_XL.render(f"{(remaining_time)//60 + 1}",True,(215,210,15))
-                timer_text2 = game_font_XXL.render(f"{(remaining_time)//60 + 1}",True,(0,0,0))
-                screen.blit(timer_text2,(555,195))
-                screen.blit(timer_text,(565,210))    
+                timer_text_surf = game_font_XL.render(f"{count_val}", True, (215, 210, 15))
+                timer_shadow = game_font_XXL.render(f"{count_val}", True, (0, 0, 0))
+                screen.blit(timer_shadow, (555, 195))
+                screen.blit(timer_text_surf, (565, 210))    
 
         else:
-            screen.blit(light_overlay,(0,0))
-            if timer % 60 < 5 or 10 < timer % 60 < 15: # Making timer flicker red every second
-                timer_text = game_font_M.render(f"Time : {round(timer/60,2)}",True,(177,18,38))
-            else:
-                timer_text = game_font_M.render(f"Time : {round(timer/60,2)}",True,(50,50,50)) 
+            screen.blit(light_overlay, (0, 0))
+            color = (177, 18, 38) if (timer % 60 < 5 or 10 < timer % 60 < 15) else (50, 50, 50)
+            running_timer_surf = game_font_M.render(f"Time : {round(timer/60, 2)}", True, color) 
 
-            screen.blit(timer_text,(450,30))
-            maze.draw_mazes(screen,(243,243,243),maze_type)
-            player.draw_player(screen,maze)
+            screen.blit(running_timer_surf, (450, 30))
+            maze.draw_mazes(screen, (243, 243, 243), maze_type)
+            player.draw_player(screen, maze)
+            
             if gamemode == "versus_ai":
                 smarty.update(pygame.time.get_ticks())
-                smarty.draw(screen,maze)
+                smarty.draw(screen, maze)
 
-
-            # All that happens when you finish the maze
-            if player.check_victoire(maze) or smarty.smarty_win(maze): # When you reach the end, cool 3D text goes brr.
-                timer_text = game_font_M.render(f"Time : {round(timer/60,2)}",True,(220,220,30))
-                timer_text2 = game_font_M.render(f"Time : {round(timer/60,2)}",True,(50,50,50))
-                screen.blit(timer_text2,(448,28))
-                screen.blit(timer_text,(450,30))   
+            if player.check_victoire(maze) or (gamemode == "versus_ai" and smarty.smarty_win(maze)):
                 game_state = "finished"
-                if player.check_victoire(maze):
-                    who_won = "player"
-                else:
-                    who_won = "AI"
+                who_won = "player" if player.check_victoire(maze) else "AI"
             
     pygame.display.flip()
-
     clock.tick(60)
-
-pygame.quit()
