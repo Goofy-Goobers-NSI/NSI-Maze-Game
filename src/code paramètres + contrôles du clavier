@@ -1,0 +1,92 @@
+difficulty = "Normal"
+controls = "ARROWS"
+
+def settings_menu():
+    global difficulty, controls
+    running = True
+
+    while running:
+        screen.fill((255, 255, 255))
+
+          screen.blit(big_font.render("PARAMETRES", True, (0, 0, 0)), (230, 30))
+# Difficultés du jeu
+          screen.blit(font.render("DIFFICULTE", True, (0, 0, 0)), (80, 120))
+          pygame.draw.rect(screen, (200, 200, 200), (80, 160, 150, 50))   # Difficulté EASY
+          pygame.draw.rect(screen, (200, 200, 200), (80, 220, 150, 50))   # Difficulté  NORMAL
+          pygame.draw.rect(screen, (200, 200, 200), (80, 280, 150, 50))   #Difficulté HARD
+
+          screen.blit(font.render("EASY", True, (0, 0, 0)), (120, 175))
+          screen.blit(font.render("NORMAL", True, (0, 0, 0)), (105, 235))
+          screen.blit(font.render("HARD", True, (0, 0, 0)), (120, 295)
+  
+# CONTROLES ARROWS + WASD + ZQSD
+          screen.blit(font.render("CONTROLES", True, (0, 0, 0)), (400, 120))
+          pygame.draw.rect(screen, (200, 200, 200), (400, 160, 180, 50))  #Controle ARROWS
+          pygame.draw.rect(screen, (200, 200, 200), (400, 220, 180, 50))  #Controle WASD
+          pygame.draw.rect(screen, (200, 200, 200), (400, 280, 180, 50))  #Controle ZQSD
+
+          screen.blit(font.render("ARROWS", True, (0, 0, 0)), (440, 175))
+          screen.blit(font.render("WASD", True, (0, 0, 0)), (450, 235))
+          screen.blit(font.render("ZQSD", True, (0, 0, 0)), (450, 295))
+
+          for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = pygame.mouse.get_pos()
+
+# Difficulté
+                if 80 < x < 230 and 160 < y < 210:
+                    difficulty = "Easy"
+                if 80 < x < 230 and 220 < y < 270:
+                    difficulty = "Normal"
+                if 80 < x < 230 and 280 < y < 330:
+                    difficulty = "Hard"
+
+
+# Contrôles
+                if 400 < x < 580 and 160 < y < 210:
+                    controls = "ARROWS"
+                if 400 < x < 580 and 220 < y < 270:
+                    controls = "WASD"
+                if 400 < x < 580 and 280 < y < 330:
+                    controls = "ZQSD"
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    running = False
+
+        pygame.display.update()
+
+
+
+# Touches controle du jeu clavier
+keys = pygame.key.get_pressed()
+
+if controls == "ARROWS":
+    if keys[pygame.K_LEFT]:
+        pass
+    if keys[pygame.K_RIGHT]:
+        pass
+    if keys[pygame.K_UP]:
+        pass
+    if keys[pygame.K_DOWN]:
+        pass
+
+  if controls == "WASD":
+    if keys[pygame.K_a]:
+        pass
+    if keys[pygame.K_d]:
+        pass
+    if keys[pygame.K_w]:
+        pass
+    if keys[pygame.K_s]:
+        pass
+
+if controls == "ZQSD":
+    if keys[pygame.K_q]:
+        pass
+    if keys[pygame.K_d]:
+        pass
+    if keys[pygame.K_z]:
+        pass
+    if keys[pygame.K_s]:
+        pass
