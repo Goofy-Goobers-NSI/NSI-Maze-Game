@@ -6,15 +6,19 @@ nsi-maze-game/
 Contient tout le code source.
 
     - __init__.py – permet à Python de reconnaître le dossier comme un package
-
+      
     - cell.py – définit une cellule du labyrinthe (murs, position, etc...)
-
+      
     - maze.py – gère la génération du labyrinthe (algorithme de Wilson)
-
+      
     - player.py – gère les déplacements et les contrôles du joueur
-
-    - game.py – fichier principal qui exécute le jeu et relie tous les éléments
-
+      
+    - main.py – fichier principal qui exécute le jeu et relie tous les classes
+      
+    - smarty_pants.py - L'entite qui suit la solution
+      
+    - solver.py - L'algorithme de rechereche en profondeur, avec un systeme d'erreur.
+      
     - textures/ Dossier pour les images, et autres éléments visuels.
 
 - README.md - Description générale du projet et instructions d’installation
