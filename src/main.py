@@ -119,7 +119,7 @@ while running:
                 menu_state = "main"
         elif menu_state == "leaderboard":
             draw_leaderboard(game_font_XXXS, game_font_XXS, category, fastest_time, endurance_easy, endurance_medium, endurance_hard, endurance_expert, close_button)
-            if click and close_button.is_hovered():
+            if click and (close_button.is_hovered() or leaderboard_button.is_hovered()):
                 menu_state = "main"
         elif menu_state == "gamemode_soloduo":
             draw_play_solo_duo(game_font_XXS, game_font_S, solo_button, duo_button, return_button, game_title1, game_title11, menu_background, pygame.time.get_ticks())
