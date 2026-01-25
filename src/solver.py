@@ -21,10 +21,9 @@ class Solver:
             "hard":   {"m": (0, 3), "d": (1, 5), "gap": 25}
         }
         
-        conf = configs.get(difficulty.lower(), configs["normal"])
-        self.max_mistakes = random.randint(conf["m"][0], conf["m"][1])
-        self.depth_range = conf["d"]
-        self.min_gap = conf["gap"]
+        self.max_mistakes = random.randint(configs[difficulty]["m"][0], configs[difficulty]["m"][1])
+        self.depth_range = configs[difficulty]["d"]
+        self.min_gap = configs[difficulty]["gap"]
         
         self.mistakes_made = 0
         self.steps_since_last_mistake = 0

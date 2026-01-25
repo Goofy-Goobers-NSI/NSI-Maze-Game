@@ -289,6 +289,7 @@ def highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button):
     elif movement_keys == "ARROWS":
         arrows_button.render_button(screen,(150,150,150))
         pygame.draw.rect(screen,(220,220,30),[830,300,180,100],4)
+        
 def draw_setting_menu(smaller_font,small_font,big_font,menu_background,return_button,wasd_button,zqsd_button,arrows_button,movement_keys,ez_ai_button,mid_ai_button,hard_ai_button):
     screen.blit(menu_background.image, (menu_background.x, menu_background.y))
     screen.blit(dark_overlay, (0, 0))
