@@ -13,6 +13,10 @@
             "time": 2.7
         },
         {
+            "name": "Guillaume",
+            "time": 2.7
+        },
+        {
             "name": "ynot",
             "time": 2.88
         },
@@ -35,10 +39,6 @@
         {
             "name": "Guillaume",
             "time": 3.17
-        },
-        {
-            "name": "Guillaume",
-            "time": 3.22
         }
     ],
     "time_limit_easy": [],
