@@ -3,7 +3,7 @@ from maze import Maze
 from player import Player
 from solver import Solver
 from smarty_pants import Smartypants
-from menu import Background,Button,play_button_image,add_time,draw_menu,draw_leaderboard,draw_end_screen,check_in_leaderboard,draw_name_window,draw_play_solo_duo,draw_cat_menu
+from menu import Background,Button,add_time,draw_menu,draw_leaderboard,draw_end_screen,check_in_leaderboard,draw_name_window,draw_play_solo_duo,draw_cat_menu,draw_setting_menu
 
 leaderboard_file = "leaderboard.json"
 
@@ -65,12 +65,17 @@ endurance_easy = Button(250,262,300,50)
 endurance_medium = Button(250,425,300,50)
 endurance_hard = Button(250,586,300,50)
 endurance_expert = Button(250,748,300,50)
-close_button = Button(1175,75,50,50)
 back_to_menu = Button(750,475,300,100)
 play_again = Button(350,475,300,100)
 solo_button = Button(205,400,450,450)
 duo_button = Button(795,400,450,450)
 return_button = Button(25,25,100,100)
+wasd_button = Button(390,300,180,100)
+zqsd_button = Button(610,300,180,100)
+arrows_button = Button(830,300,180,100)
+ez_ai_button = 4
+mid_ai_button = 5
+hard_ai_button = 6
 
 # Create the Maze
 maze = Maze(15, 15)
@@ -118,9 +123,20 @@ while running:
             if click and return_button.is_hovered():
                 menu_state = "main"
         elif menu_state == "leaderboard":
-            draw_leaderboard(game_font_XXXS, game_font_XXS, category, fastest_time, endurance_easy, endurance_medium, endurance_hard, endurance_expert, close_button)
-            if click and (close_button.is_hovered() or leaderboard_button.is_hovered()):
+            draw_leaderboard(game_font_XXXS, game_font_XXS,menu_background, category, fastest_time, endurance_easy, endurance_medium, endurance_hard, endurance_expert, return_button)
+            if click and return_button.is_hovered():
                 menu_state = "main"
+        elif menu_state == "settings":
+            draw_setting_menu(game_font_XXS,game_font_XS,game_font_S,menu_background,return_button,wasd_button,zqsd_button,arrows_button,movement_keys,ez_ai_button,mid_ai_button,hard_ai_button)
+            if click:
+                if return_button.is_hovered():
+                    menu_state = "main"
+                elif wasd_button.is_hovered():
+                    movement_keys = "WASD"
+                elif zqsd_button.is_hovered():
+                    movement_keys = "ZQSD"
+                elif arrows_button.is_hovered():
+                    movement_keys = "ARROWS"
         elif menu_state == "gamemode_soloduo":
             draw_play_solo_duo(game_font_XXS, game_font_S, solo_button, duo_button, return_button, game_title1, game_title11, menu_background, pygame.time.get_ticks())
             if click:
@@ -150,7 +166,7 @@ while running:
                     category = "casual"
                     player_name = "|"
                     has_written_name = False
-        elif menu_state == "main" or menu_state is None:
+        elif menu_state == "main":
             if click:
                 if play_button.is_hovered():
                     menu_state = "gamemode_soloduo"
@@ -158,6 +174,8 @@ while running:
                     menu_state = "leaderboard"
                 elif cat_button.is_hovered():
                     menu_state = "cats"
+                elif settings_button.is_hovered():
+                    menu_state = "settings"
 
     elif game_state == "finished":
         screen.fill("white")

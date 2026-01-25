@@ -12,8 +12,6 @@ settings_image = pygame.image.load("assets\images\cog.png").convert_alpha()
 settings_image = pygame.transform.scale(settings_image,(130,130))
 leaderboard_image = pygame.image.load("assets\images\_trophy.png").convert_alpha()
 leaderboard_image = pygame.transform.scale(leaderboard_image,(110,95))
-cross_image = pygame.image.load("assets\images\cross.png").convert_alpha()
-cross_image = pygame.transform.scale(cross_image,(100,100))
 return_arrow = pygame.image.load("assets\images\_return_arrow.png")
 return_arrow = pygame.transform.scale(return_arrow,(90,76))
 light_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
@@ -133,7 +131,9 @@ def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons,
     screen.blit(play_button_text,(400,475))
 
 # Functions for the leaderboard 
-def draw_leaderboard(small_font,big_font,category,fastest_time,endurance_e,endurance_m,endurance_h,endurance_ex,close_button):
+def draw_leaderboard(small_font,big_font,menu_background,category,fastest_time,endurance_e,endurance_m,endurance_h,endurance_ex,return_button):
+    screen.blit(menu_background.image, (menu_background.x, menu_background.y))
+    screen.blit(dark_overlay, (0, 0))
     pygame.draw.rect(screen,(50,50,50),[200,50,1050,800])
     pygame.draw.rect(screen,(250,200,135),[200,50,1050,800],15)
     fastest_time.render_button(screen,(50,50,50))
@@ -141,7 +141,7 @@ def draw_leaderboard(small_font,big_font,category,fastest_time,endurance_e,endur
     endurance_m.render_button(screen,(50,50,50))
     endurance_h.render_button(screen,(50,50,50))
     endurance_ex.render_button(screen,(50,50,50))
-    close_button.render_button(screen,(50,50,50))
+    return_button.render_button(screen,(50,50,50))
     for i in range(5):
         pygame.draw.rect(screen,(230,230,230),[250,100+i*162,300,50],5)
     fastest_completion = small_font.render("Fastest time",True,(230,230,230))
@@ -154,7 +154,7 @@ def draw_leaderboard(small_font,big_font,category,fastest_time,endurance_e,endur
     screen.blit(endurance_medium,(257,430))
     screen.blit(endurance_hard,(275,591))
     screen.blit(endurance_expert,(260,753))
-    screen.blit(cross_image,(1150,50))
+    screen.blit(return_arrow,(30,35))
     leaderboard = load_leaderboard()
     for i in range(1,len(leaderboard[category])+1):
         if i == 1:
@@ -253,7 +253,6 @@ def draw_play_solo_duo(small_font,big_font,solo_button,versus_button,return_butt
     screen.blit(versus_text_title,(880,425))
 
 def draw_cat_menu(small_font, return_button, menu_background, cat_catalog):
-
     screen.blit(menu_background.image, (menu_background.x, menu_background.y))
     screen.blit(dark_overlay, (0, 0))
     cat_title = small_font.render("THE CAT GALLERY", True, (250, 200, 135))
@@ -278,3 +277,39 @@ def draw_cat_menu(small_font, return_button, menu_background, cat_catalog):
     pygame.draw.rect(screen, (50, 50, 50), caption_rect.inflate(20, 10))
     pygame.draw.rect(screen, (255, 192, 203), caption_rect.inflate(20, 10), 2)
     screen.blit(caption, caption_rect)
+
+
+def highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button):
+    if movement_keys == "WASD":
+        wasd_button.render_button(screen,(150,150,150))
+        pygame.draw.rect(screen,(220,220,30),[390,300,180,100],4)
+    elif movement_keys == "ZQSD":
+        zqsd_button.render_button(screen,(150,150,150))
+        pygame.draw.rect(screen,(220,220,30),[610,300,180,100],4)
+    elif movement_keys == "ARROWS":
+        arrows_button.render_button(screen,(150,150,150))
+        pygame.draw.rect(screen,(220,220,30),[830,300,180,100],4)
+def draw_setting_menu(smaller_font,small_font,big_font,menu_background,return_button,wasd_button,zqsd_button,arrows_button,movement_keys,ez_ai_button,mid_ai_button,hard_ai_button):
+    screen.blit(menu_background.image, (menu_background.x, menu_background.y))
+    screen.blit(dark_overlay, (0, 0))
+    return_button.render_button(screen,(50,50,50))
+    screen.blit(return_arrow,(30,35))
+    pygame.draw.rect(screen,(50,50,50),[350,50,700,800])
+    pygame.draw.rect(screen,(250,200,135),[350,50,700,800],15)
+    settings_title_text = big_font.render("Settings",True,(230,230,230))
+    screen.blit(settings_title_text,(525,75))
+    controls_text = small_font.render("Player controls",True,(230,230,230))
+    screen.blit(controls_text,(500,200))
+    wasd_button.render_button(screen,(50,50,50))
+    zqsd_button.render_button(screen,(50,50,50))
+    arrows_button.render_button(screen,(50,50,50))
+    highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button)
+    for i in range(3):
+        pygame.draw.rect(screen,(230,230,230),[390 + i*220,300,180,100],4)
+    highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button)
+    wasd_text = smaller_font.render('WASD',True,(230,230,230))
+    zqsd_text = smaller_font.render('ZQSD',True,(230,230,230))
+    arrows_text = smaller_font.render('ARROWS',True,(230,230,230))
+    screen.blit(wasd_text,(420,325))
+    screen.blit(zqsd_text,(648,325))
+    screen.blit(arrows_text,(837,325))
