@@ -3,7 +3,7 @@ import random
 from maze import N, E, S, W, DX, DY
 
 class Solver:
-    def __init__(self, maze, difficulty="normal"):
+    def __init__(self, maze, difficulty):
         self.maze = maze
         self.solution_path = []
         self.visited = set()
@@ -17,13 +17,13 @@ class Solver:
         
         configs = {
             "easy":   {"m": (6, 8), "d": (5, 9), "gap": 5},
-            "normal": {"m": (3, 5), "d": (3, 5), "gap": 12},
+            "medium": {"m": (3, 5), "d": (3, 5), "gap": 12},
             "hard":   {"m": (0, 3), "d": (1, 5), "gap": 25}
         }
-        
-        self.max_mistakes = random.randint(configs[difficulty]["m"][0], configs[difficulty]["m"][1])
-        self.depth_range = configs[difficulty]["d"]
-        self.min_gap = configs[difficulty]["gap"]
+        self.difficulty = difficulty
+        self.max_mistakes = random.randint(configs[self.difficulty]["m"][0], configs[self.difficulty]["m"][1])
+        self.depth_range = configs[self.difficulty]["d"]
+        self.min_gap = configs[self.difficulty]["gap"]
         
         self.mistakes_made = 0
         self.steps_since_last_mistake = 0

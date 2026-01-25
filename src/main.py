@@ -24,6 +24,8 @@ player_name = "|"
 has_written_name = False
 render_buttons = True
 category = "casual"
+robot_difficulty = "medium"
+robot_speed = 225
 
 # Timer
 timer = 0
@@ -73,9 +75,9 @@ return_button = Button(25,25,100,100)
 wasd_button = Button(390,300,180,100)
 zqsd_button = Button(610,300,180,100)
 arrows_button = Button(830,300,180,100)
-ez_ai_button = 4
-mid_ai_button = 5
-hard_ai_button = 6
+ez_ai_button = Button(390,550,180,100)
+mid_ai_button = Button(610,550,180,100)
+hard_ai_button = Button(830,550,180,100)
 
 # Create the Maze
 maze = Maze(15, 15)
@@ -85,11 +87,11 @@ maze.generate_maze()
 player = Player(maze.start.x,maze.start.y)
 
 # Solve Maze
-solver = Solver(maze)
+solver = Solver(maze,robot_difficulty)
 solution_path = solver.solve()
 
 # AI Racer
-smarty = Smartypants(maze, solver)
+smarty = Smartypants(maze, solver,robot_speed)
 
 # Cats Menu
 cat_folder = "assets/images/cats"
@@ -127,7 +129,7 @@ while running:
             if click and return_button.is_hovered():
                 menu_state = "main"
         elif menu_state == "settings":
-            draw_setting_menu(game_font_XXS,game_font_XS,game_font_S,menu_background,return_button,wasd_button,zqsd_button,arrows_button,movement_keys,ez_ai_button,mid_ai_button,hard_ai_button)
+            draw_setting_menu(game_font_XXS,game_font_XS,game_font_S,menu_background,return_button,wasd_button,zqsd_button,arrows_button,movement_keys,ez_ai_button,mid_ai_button,hard_ai_button,robot_difficulty)
             if click:
                 if return_button.is_hovered():
                     menu_state = "main"
@@ -137,6 +139,15 @@ while running:
                     movement_keys = "ZQSD"
                 elif arrows_button.is_hovered():
                     movement_keys = "ARROWS"
+                elif ez_ai_button.is_hovered():
+                    robot_difficulty = "easy"
+                    robot_speed = 275
+                elif mid_ai_button.is_hovered():
+                    robot_difficulty = "medium"
+                    robot_speed = 225
+                elif hard_ai_button.is_hovered():
+                    robot_difficulty = "hard"
+                    robot_speed = 175
         elif menu_state == "gamemode_soloduo":
             draw_play_solo_duo(game_font_XXS, game_font_S, solo_button, duo_button, return_button, game_title1, game_title11, menu_background, pygame.time.get_ticks())
             if click:
@@ -158,9 +169,9 @@ while running:
                     maze_type = "versus"
                     maze = Maze(15, 15)
                     maze.generate_maze()
-                    solver = Solver(maze)
+                    solver = Solver(maze,robot_difficulty)
                     solution_path = solver.solve()
-                    smarty = Smartypants(maze, solver)
+                    smarty = Smartypants(maze, solver,robot_speed)
                     player.x, player.y = maze.start.x, maze.start.y
                     timer = -300
                     category = "casual"
@@ -211,9 +222,9 @@ while running:
                 maze.generate_maze()
                 player.x, player.y = maze.start.x, maze.start.y
                 if gamemode == "versus_ai":
-                    solver = Solver(maze)
+                    solver = Solver(maze,robot_difficulty)
                     solution_path = solver.solve()
-                    smarty = Smartypants(maze, solver)
+                    smarty = Smartypants(maze, solver,robot_speed)
             elif back_to_menu.is_hovered():
                 game_state, menu_state = "menu", "main"
 

@@ -2,13 +2,13 @@ import pygame
 from maze import N, E, S, W, DX, DY, OPPOSITE
 
 class Smartypants:
-    def __init__(self, maze, solver):
+    def __init__(self, maze, solver,speed):
         self.maze = maze
         self.solver = solver
         self.current_i = 0
         self.solution_path = solver.solution_path
         self.current_cell = self.solution_path[0]
-        self.speed = 175  # milliseconds per move
+        self.speed = speed  # milliseconds per move
         self.last_move_time = pygame.time.get_ticks()
 
     def update(self, current_time):

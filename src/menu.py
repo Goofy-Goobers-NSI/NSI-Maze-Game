@@ -281,16 +281,27 @@ def draw_cat_menu(small_font, return_button, menu_background, cat_catalog):
 
 def highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button):
     if movement_keys == "WASD":
-        wasd_button.render_button(screen,(150,150,150))
-        pygame.draw.rect(screen,(220,220,30),[390,300,180,100],4)
+        wasd_button.render_button(screen,(125,125,125))
+        pygame.draw.rect(screen,(60,140,180),[390,300,180,100],4)
     elif movement_keys == "ZQSD":
-        zqsd_button.render_button(screen,(150,150,150))
-        pygame.draw.rect(screen,(220,220,30),[610,300,180,100],4)
+        zqsd_button.render_button(screen,(125,125,125))
+        pygame.draw.rect(screen,(60,140,180),[610,300,180,100],4)
     elif movement_keys == "ARROWS":
-        arrows_button.render_button(screen,(150,150,150))
-        pygame.draw.rect(screen,(220,220,30),[830,300,180,100],4)
+        arrows_button.render_button(screen,(125,125,125))
+        pygame.draw.rect(screen,(60,140,180),[830,300,180,100],4)
         
-def draw_setting_menu(smaller_font,small_font,big_font,menu_background,return_button,wasd_button,zqsd_button,arrows_button,movement_keys,ez_ai_button,mid_ai_button,hard_ai_button):
+def highlight_chosen_difficulty(difficulty,ez_button,mid_button,hard_button):
+    if difficulty == "easy":
+        ez_button.render_button(screen,(125,125,125))
+        pygame.draw.rect(screen,(90,200,120),[390,550,180,100],4)
+    elif difficulty == "medium":
+        mid_button.render_button(screen,(125,125,125))
+        pygame.draw.rect(screen,(235,210,80),[610,550,180,100],4)
+    elif difficulty == "hard":
+        hard_button.render_button(screen,(125,125,125))
+        pygame.draw.rect(screen,(170,60,60),[830,550,180,100],4)
+
+def draw_setting_menu(smaller_font,small_font,big_font,menu_background,return_button,wasd_button,zqsd_button,arrows_button,movement_keys,ez_ai_button,mid_ai_button,hard_ai_button,robot_difficulty):
     screen.blit(menu_background.image, (menu_background.x, menu_background.y))
     screen.blit(dark_overlay, (0, 0))
     return_button.render_button(screen,(50,50,50))
@@ -304,7 +315,6 @@ def draw_setting_menu(smaller_font,small_font,big_font,menu_background,return_bu
     wasd_button.render_button(screen,(50,50,50))
     zqsd_button.render_button(screen,(50,50,50))
     arrows_button.render_button(screen,(50,50,50))
-    highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button)
     for i in range(3):
         pygame.draw.rect(screen,(230,230,230),[390 + i*220,300,180,100],4)
     highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button)
@@ -314,3 +324,18 @@ def draw_setting_menu(smaller_font,small_font,big_font,menu_background,return_bu
     screen.blit(wasd_text,(420,325))
     screen.blit(zqsd_text,(648,325))
     screen.blit(arrows_text,(837,325))
+
+    controls_text = small_font.render("AI difficulty",True,(230,230,230))
+    screen.blit(controls_text,(550,450))
+    ez_ai_button.render_button(screen,(50,50,50))
+    mid_ai_button.render_button(screen,(50,50,50))
+    hard_ai_button.render_button(screen,(50,50,50))
+    for i in range(3):
+        pygame.draw.rect(screen,(230,230,230),[390 + i*220,550,180,100],4)
+    highlight_chosen_difficulty(robot_difficulty,ez_ai_button,mid_ai_button,hard_ai_button)
+    easy_text = smaller_font.render('EASY',True,(230,230,230))
+    medium_text = smaller_font.render('MEDIUM',True,(230,230,230))
+    hard_text = smaller_font.render('HARD',True,(230,230,230))
+    screen.blit(easy_text,(425,575))
+    screen.blit(medium_text,(615,575))
+    screen.blit(hard_text,(870,575))
