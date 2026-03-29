@@ -2,24 +2,24 @@
 import random
 import pygame
 import os, json
-leaderboard_file = "assets\leaderboard.json"
+leaderboard_file = "assets\\leaderboard.json"
 screen = pygame.display.set_mode((1440,900))
 # Images 
-background_image = pygame.image.load("assets\images\maze_menu_background.jpg").convert_alpha()
-play_button_image = pygame.image.load("assets\images\play.png").convert_alpha()
+background_image = pygame.image.load("assets\\images\\maze_menu_background.jpg").convert_alpha()
+play_button_image = pygame.image.load("assets\\images\\play.png").convert_alpha()
 play_button_image = pygame.transform.scale(play_button_image,(130,130))
-settings_image = pygame.image.load("assets\images\cog.png").convert_alpha()
+settings_image = pygame.image.load("assets\\images\\cog.png").convert_alpha()
 settings_image = pygame.transform.scale(settings_image,(130,130))
-leaderboard_image = pygame.image.load("assets\images\_trophy.png").convert_alpha()
+leaderboard_image = pygame.image.load("assets\\images\\trophy.png").convert_alpha()
 leaderboard_image = pygame.transform.scale(leaderboard_image,(110,95))
-return_arrow = pygame.image.load("assets\images\_return_arrow.png")
+return_arrow = pygame.image.load("assets\\images\\return_arrow.png")
 return_arrow = pygame.transform.scale(return_arrow,(90,76))
 light_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
 light_overlay.fill((200,200,200,50))
 dark_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
 dark_overlay.fill((200,200,200,200))
 # Cat images
-CAT = pygame.image.load("assets\images\cat.png").convert_alpha()
+CAT = pygame.image.load("assets\\images\\cat.png").convert_alpha()
 CAT = pygame.transform.scale(CAT,(110,82))
 # Text
 

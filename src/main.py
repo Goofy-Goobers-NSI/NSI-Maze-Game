@@ -31,7 +31,7 @@ robot_speed = 225
 timer = 0
 
 # Initializing variables for images 
-background_image = pygame.image.load("assets\images\maze_menu_background.jpg").convert_alpha()
+background_image = pygame.image.load("assets\\images\\maze_menu_background.jpg").convert_alpha()
 menu_background = Background(-1780,-2050,background_image)
 light_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoir un effet de transparence
 light_overlay.fill((200,200,200,50))
@@ -39,20 +39,20 @@ dark_overlay = pygame.Surface(screen.get_size(),pygame.SRCALPHA) # Permet d'avoi
 dark_overlay.fill((200,200,200,200))
 
 # Sounds
-countdown_sound = pygame.mixer.Sound("assets\sounds\countdown_sound.wav")
-go_sound = pygame.mixer.Sound("assets\sounds\Go.wav")
-secret_go_sound = pygame.mixer.Sound("assets\sounds\Goon.wav") # Time to goon
+countdown_sound = pygame.mixer.Sound("assets\\sounds\\countdown_sound.wav")
+go_sound = pygame.mixer.Sound("assets\\sounds\\Go.wav")
+secret_go_sound = pygame.mixer.Sound("assets\\sounds\\Secret_Go.wav")
 
 # Initializing variables for text
-game_font_XXXS = pygame.font.Font("assets\_fonts\Racing.otf",30)
-game_font_XXS = pygame.font.Font("assets\_fonts\Racing.otf",40)
-game_font_XS = pygame.font.Font("assets\_fonts\Racing.otf",50)
-game_font_under_S = pygame.font.Font("assets\_fonts\Racing.otf",65)
-game_font_S = pygame.font.Font("assets\_fonts\Racing.otf",75)
-game_font_M = pygame.font.Font("assets\_fonts\Racing.otf",100)
-game_font_L = pygame.font.Font("assets\_fonts\Racing.otf",150)
-game_font_XL = pygame.font.Font("assets\_fonts\Racing.otf",350)
-game_font_XXL = pygame.font.Font("assets\_fonts\Racing.otf",375)
+game_font_XXXS = pygame.font.Font("assets\\fonts\\Racing.otf",30)
+game_font_XXS = pygame.font.Font("assets\\fonts\\Racing.otf",40)
+game_font_XS = pygame.font.Font("assets\\fonts\\Racing.otf",50)
+game_font_under_S = pygame.font.Font("assets\\fonts\\Racing.otf",65)
+game_font_S = pygame.font.Font("assets\\fonts\\Racing.otf",75)
+game_font_M = pygame.font.Font("assets\\fonts\\Racing.otf",100)
+game_font_L = pygame.font.Font("assets\\fonts\\Racing.otf",150)
+game_font_XL = pygame.font.Font("assets\\fonts\\Racing.otf",350)
+game_font_XXL = pygame.font.Font("assets\\fonts\\Racing.otf",375)
 game_title1 = game_font_L.render("MAZE",True,(177, 18, 38))
 game_title11 = game_font_L.render("RACERS",True,(177, 18, 38))
 timer_text = game_font_M.render(f"Time : {timer}",True,(50,50,50))
@@ -98,7 +98,7 @@ cat_folder = "assets/images/cats"
 cat_catalog = []
 
 for i in range(1, 9):
-    file_base = f"{cat_folder}/cat{i}"
+    file_base = f"{cat_folder}\\cat{i}"
     ext = ".png"
     surf = pygame.image.load(f"{file_base}{ext}").convert_alpha()
     surf = pygame.transform.scale(surf, (210, 210))
