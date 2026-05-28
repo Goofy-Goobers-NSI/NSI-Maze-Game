@@ -1,9 +1,9 @@
-import pygame,random
+import pygame, random
 from maze import Maze
 from player import Player
 from solver import Solver
 from smarty_pants import Smartypants
-from menu import Background,Button,add_time,draw_menu,draw_leaderboard,draw_end_screen,check_in_leaderboard,draw_name_window,draw_play_solo_duo,draw_cat_menu,draw_setting_menu
+from menu import Background, Button, add_time, draw_menu, draw_leaderboard, draw_end_screen, check_in_leaderboard, draw_name_window, draw_play_solo_duo, draw_cat_menu, draw_setting_menu
 
 leaderboard_file = "leaderboard.json"
 
@@ -41,7 +41,7 @@ dark_overlay.fill((200,200,200,200))
 # Sounds
 countdown_sound = pygame.mixer.Sound("assets\\sounds\\countdown_sound.wav")
 go_sound = pygame.mixer.Sound("assets\\sounds\\Go.wav")
-secret_go_sound = pygame.mixer.Sound("assets\\sounds\\Secret_Go.wav")
+secret_go_sound = pygame.mixer.Sound("assets\\sounds\\Secret_Go.wav") # time to goon vro
 
 # Initializing variables for text
 game_font_XXXS = pygame.font.Font("assets\\fonts\\Racing.otf",30)

@@ -91,15 +91,13 @@ def draw_menu(menu_background,current_time,game_title1,game_title11,play_button,
     # Settings button
     settings_button.render_button(screen,(69,69,69))
     screen.blit(settings_image,(635,660))
-        
+
     # Leaderboard button
     leaderboard_button.render_button(screen,(69,69,69))
     screen.blit(leaderboard_image,(30,337))
-
     # Cat button :3
     cat_button.render_button(screen,(69,69,69))
     screen.blit(CAT,(1300,344))
-
 def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons,who_won):
     pygame.draw.rect(screen,(50,50,50),[300,200,800,425])
     pygame.draw.rect(screen,(250,200,135),[300,200,800,425],15)
@@ -119,7 +117,6 @@ def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons,
         screen.blit(victory_text21,(568,288))
         screen.blit(victory_text2,(570,290))
         screen.blit(timer_text,(415,360))
-    
     if render_buttons:
         menu_button.render_button(screen,(50,50,50))
         play_back_button.render_button(screen,(50,50,50))
@@ -129,7 +126,6 @@ def draw_end_screen(font,menu_button,play_back_button,timer_text,render_buttons,
     play_button_text = font.render("PLAY",True,(230,230,230))
     screen.blit(menu_button_text,(790,475))
     screen.blit(play_button_text,(400,475))
-
 # Functions for the leaderboard 
 def draw_leaderboard(small_font,big_font,menu_background,category,fastest_time,endurance_e,endurance_m,endurance_h,endurance_ex,return_button):
     screen.blit(menu_background.image, (menu_background.x, menu_background.y))
@@ -171,19 +167,16 @@ def draw_leaderboard(small_font,big_font,menu_background,category,fastest_time,e
             time_text = big_font.render(f"{leaderboard[category][i-1]["time"]}",True,(230,230,230))
         screen.blit(place_text,(600,60+70*i))
         screen.blit(time_text,(1100,60+70*i))
-
-# I used chatgpt for the next three functions but I can fully explain it, I swear I can, please don't burn me alive
+# I used chatgpt for the next three functions but I can fully explain it, I swear I can, please don't goon me alive
 def load_leaderboard(): # Opens the leaderboard file
     with open(leaderboard_file, "r") as f:
         return json.load(f)
-    
 def save_leaderboard(data): # Will be called to save the changes made to the leaderboard
     with open(leaderboard_file, "w") as f:
         json.dump(data, f, indent=4)
-
 def add_time(category,player_name,new_time):
     leaderboard = load_leaderboard()
-    # Adds the new time, A NEW CHALLENGER HAS ARRIVED !!!!!!
+    # Adds the new time, A NEW CHALLENGER HAS ARRIVED !!!!!! fahhhhhh
     leaderboard[category].append({
         "name": player_name,
         "time": new_time
@@ -192,16 +185,14 @@ def add_time(category,player_name,new_time):
     leaderboard[category].sort(key=lambda entry: entry["time"])
     # Keeps only the ten first entries
     leaderboard[category] = leaderboard[category][:10]
-    # Saves changes made, because duh
+    # Saves changes made, because dih
     save_leaderboard(leaderboard)
-
 def check_in_leaderboard(category,time): # Returns True if time is in leaderboard, used for asking name
     leaderboard = load_leaderboard()
     if len(leaderboard[category]) < 10:
         return True
     else:
         return time < leaderboard[category][9]["time"]
-
 def draw_name_window(font,player_name):
     pygame.draw.rect(screen,(50,50,50),[150,250,1100,275])
     pygame.draw.rect(screen,(250,200,135),[150,250,1100,275],15)
@@ -216,11 +207,9 @@ def draw_name_window(font,player_name):
     pygame.draw.rect(screen,(230,230,230),[600,380,600,100],3)
     player_name_text = font.render(player_name,True,(230,230,230))
     screen.blit(player_name_text,(620,400))
-
 def draw_play_solo_duo(small_font,big_font,solo_button,versus_button,return_button,game_title1,game_title11,menu_background,current_time):
     screen.fill("white")
     screen.blit(menu_background.image,(menu_background.x,menu_background.y))
-    # Logo
     pygame.draw.rect(screen,(250,200,135),[375,25,650,350])
     pygame.draw.rect(screen,(43,43,43),[375,25,650,350],7)
     screen.blit(game_title1,(475,40))
@@ -251,7 +240,6 @@ def draw_play_solo_duo(small_font,big_font,solo_button,versus_button,return_butt
     screen.blit(versus_text_explanation3,(825,685))
     screen.blit(versus_text_explanation4,(900,720))
     screen.blit(versus_text_title,(880,425))
-
 def draw_cat_menu(small_font, return_button, menu_background, cat_catalog):
     screen.blit(menu_background.image, (menu_background.x, menu_background.y))
     screen.blit(dark_overlay, (0, 0))
@@ -262,7 +250,6 @@ def draw_cat_menu(small_font, return_button, menu_background, cat_catalog):
     screen.blit(cat_title, title_rect)
     return_button.render_button(screen, (50, 50, 50))
     screen.blit(return_arrow, (30, 35))
-
     for i in range(4):
         for j in range(2):
             index = i + j * 4
@@ -271,14 +258,11 @@ def draw_cat_menu(small_font, return_button, menu_background, cat_catalog):
             frame_y = 180 + j * 320
             pygame.draw.rect(screen, (250, 200, 135), [frame_x, frame_y, 250, 250], 10)
             screen.blit(cat_catalog[index], (frame_x + 20, frame_y + 20))
-
     caption = small_font.render(":3 Meow :3", True, (255, 192, 203))
     caption_rect = caption.get_rect(center=(720, 820))
     pygame.draw.rect(screen, (50, 50, 50), caption_rect.inflate(20, 10))
     pygame.draw.rect(screen, (255, 192, 203), caption_rect.inflate(20, 10), 2)
     screen.blit(caption, caption_rect)
-
-
 def highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button):
     if movement_keys == "WASD":
         wasd_button.render_button(screen,(125,125,125))
@@ -289,7 +273,6 @@ def highlight_chosen_keys(movement_keys,wasd_button,zqsd_button,arrows_button):
     elif movement_keys == "ARROWS":
         arrows_button.render_button(screen,(125,125,125))
         pygame.draw.rect(screen,(60,140,180),[830,300,180,100],4)
-        
 def highlight_chosen_difficulty(difficulty,ez_button,mid_button,hard_button):
     if difficulty == "easy":
         ez_button.render_button(screen,(125,125,125))
@@ -324,7 +307,6 @@ def draw_setting_menu(smaller_font,small_font,big_font,menu_background,return_bu
     screen.blit(wasd_text,(420,325))
     screen.blit(zqsd_text,(648,325))
     screen.blit(arrows_text,(837,325))
-
     controls_text = small_font.render("AI difficulty",True,(230,230,230))
     screen.blit(controls_text,(550,450))
     ez_ai_button.render_button(screen,(50,50,50))

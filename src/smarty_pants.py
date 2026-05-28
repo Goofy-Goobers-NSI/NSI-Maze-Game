@@ -1,5 +1,4 @@
 import pygame
-from maze import N, E, S, W, DX, DY, OPPOSITE
 
 class Smartypants:
     def __init__(self, maze, solver,speed):

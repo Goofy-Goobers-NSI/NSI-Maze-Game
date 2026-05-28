@@ -24,8 +24,6 @@ class Maze:
         # Create grid of cell objects
         self.grille = [[Cellule(x, y) for y in range(hauteur)] for x in range(largeur)]
         self.in_maze = {self.choose_random_cell()}
-
-        # placeholders
         self.start = None
         self.end = None
 
@@ -53,7 +51,7 @@ class Maze:
         self.end = self.grille[end_x][end_y]
         return self.end
     
-    def remove_outer_walls(self,cell,screen):
+    def remove_outer_walls(self,cell):
         if cell.x == 0:
             cell.remove_walls([-1,0])
         elif cell.x == 14:
